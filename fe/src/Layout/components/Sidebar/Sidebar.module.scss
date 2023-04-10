@@ -1,0 +1,20 @@
+.wrapper {
+    width: 250px;
+    border-right: 1px solid #ccc;
+
+    .menu {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+
+        &:child() {
+            cursor: pointer;
+        }
+    }
+
+    .title {
+        margin: 12px 0px;
+        display: flex;
+        justify-content: left;
+    }
+}

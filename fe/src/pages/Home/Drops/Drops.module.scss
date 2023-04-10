@@ -1,0 +1,47 @@
+.drops {
+    display: flex;
+    flex-direction: column;
+    margin-top: 25px;
+
+    .dropsTitle {
+        color: rgb(4, 17, 29);
+        font-weight: 700;
+        font-size: 50px;
+        text-align: left;
+    }
+}
+
+.tabs {
+    margin-top: 20px;
+
+    .tabList {
+        display: flex;
+        align-items: flex-end;
+        list-style: none;
+        border-bottom: 1px solid var(--default-gray);
+        margin-bottom: 15px;
+
+        .tabChoose {
+            font-size: 20px;
+            font-weight: 600;
+            margin-right: 20px;
+            color: rgb(4, 17, 29);
+            border-bottom: 3px solid;
+            cursor: pointer;
+        }
+
+        .tab {
+            color: #ccc;
+            font-size: 16px;
+            font-weight: 400;
+            margin-right: 20px;
+            cursor: pointer;
+        }
+    }
+
+    .tabPanel {
+        display: flex;
+        justify-content: left;
+        flex-wrap: wrap;
+    }
+}

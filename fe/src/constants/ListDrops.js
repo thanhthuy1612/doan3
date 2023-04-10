@@ -1,0 +1,21 @@
+import images from '~/assets/images';
+export const ListDrops = [
+    { title: 'REXBITS', img: images.ava2, item: 'Apr 6', price: '0.005 ETH' },
+    { title: 'Monster', img: images.ava3, item: 'Apr 15', price: '0.0065 ETH' },
+    { title: 'Monster', img: images.ava4, item: 'Now', price: '0.0065 ETH' },
+    { title: 'PARTS', img: images.ava5, item: 'Apr 11', price: '0.0065 ETH' },
+    { title: 'PARTS', img: images.ava6, item: 'Now', price: '0.0065 ETH' },
+    { title: 'Novawchi', img: images.ava7, item: 'Apr 15', price: '0.0065 ETH' },
+    { title: 'REXBITS', img: images.ava8, item: 'Apr 6', price: '0.005 ETH' },
+    { title: 'Monster', img: images.ava9, item: 'Apr 15', price: '0.0065 ETH' },
+    { title: 'Monster', img: images.ava7, item: 'Now', price: '0.0065 ETH' },
+    { title: 'PARTS', img: images.ava3, item: 'Apr 11', price: '0.0065 ETH' },
+    { title: 'PARTS', img: images.ava9, item: 'Now', price: '0.0065 ETH' },
+    { title: 'Novawchi', img: images.ava8, item: 'Apr 15', price: '0.0065 ETH' },
+    { title: 'REXBITS', img: images.ava7, item: 'Apr 6', price: '0.005 ETH' },
+    { title: 'Monster', img: images.ava6, item: 'Apr 15', price: '0.0065 ETH' },
+    { title: 'Monster', img: images.ava5, item: 'Now', price: '0.0065 ETH' },
+    { title: 'PARTS', img: images.ava4, item: 'Apr 11', price: '0.0065 ETH' },
+    { title: 'PARTS', img: images.ava3, item: 'Now', price: '0.0065 ETH' },
+    { title: 'Novawchi', img: images.ava10, item: 'Apr 15', price: '0.0065 ETH' },
+];

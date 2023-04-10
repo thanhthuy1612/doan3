@@ -1,0 +1,22 @@
+const images = {
+    logo: require('~/assets/images/logo.png'),
+    ava: require('~/assets/images/ava.webp'),
+    ava1: require('~/assets/images/ava1.avif'),
+    ava2: require('~/assets/images/ava2.webp'),
+    ava3: require('~/assets/images/ava3.jpg'),
+    ava4: require('~/assets/images/ava4.webp'),
+    ava5: require('~/assets/images/ava5.jpg'),
+    ava6: require('~/assets/images/ava6.jpg'),
+    ava7: require('~/assets/images/ava7.jpg'),
+    ava8: require('~/assets/images/ava8.jpg'),
+    ava9: require('~/assets/images/ava9.jpg'),
+    ava10: require('~/assets/images/ava10.jfif'),
+    ethereum: require('~/assets/images/ethereum.svg').default,
+    default: require('~/assets/images/default.jpg'),
+    slide1: require('~/assets/images/slide1.jpg'),
+    slide2: require('~/assets/images/slide2.webp'),
+    slide3: require('~/assets/images/slide3.jpg'),
+    slide4: require('~/assets/images/slide4.jpg'),
+    slide5: require('~/assets/images/slide5.jpg'),
+};
+export default images;
