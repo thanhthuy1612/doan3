@@ -1,10 +1,13 @@
-const { Account } = require("../model/model");
+const { Account, User } = require("../model/model");
 
 const accountController = {
   add: async (req, res) => {
     try {
       const account = new Account(req.body);
       const saveAccount = await account.save();
+      const user = new User(req.body);
+      const saveUser = await user.save();
+      console.log(saveUser);
       res.status(200).json(saveAccount);
     } catch (err) {
       res.status(500).json(err);
@@ -24,6 +27,14 @@ const accountController = {
         "pictures"
       );
       res.status(200).json(account);
+    } catch (err) {
+      res.status(500).json(err);
+    }
+  },
+  getByAccount: async (req, res) => {
+    try {
+      const accounts = await Account.find({ wallet: req.params.wallet });
+      res.status(200).json(accounts);
     } catch (err) {
       res.status(500).json(err);
     }

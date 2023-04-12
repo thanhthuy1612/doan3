@@ -8,6 +8,7 @@ var bodyParser = require("body-parser");
 
 const accountRouter = require("./routes/account");
 const pictureRouter = require("./routes/picture");
+const loginRouter = require("./routes/login");
 
 dotenv.config();
 
@@ -21,6 +22,7 @@ app.use(morgan("common"));
 
 app.use("/account", accountRouter);
 app.use("/picture", pictureRouter);
+app.use("/login", loginRouter);
 
 app.listen(8000, () => {
   console.log("Server is running...");

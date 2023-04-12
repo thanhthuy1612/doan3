@@ -6,6 +6,7 @@ router.post("/", accountController.add);
 
 router.get("/", accountController.getAll);
 router.get("/:id", accountController.getById);
+router.get("/search/:wallet", accountController.getByAccount);
 
 router.put("/:id", accountController.update);
 

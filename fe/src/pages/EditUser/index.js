@@ -3,15 +3,20 @@ import Button from '~/Layout/components/Button';
 import styles from './EditUser.module.scss';
 import images from '~/assets/images';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { setAccount } from '~/redux/reducer/Account';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPen } from '@fortawesome/free-solid-svg-icons';
+import { updateAccount } from '~/api/account';
 
 export default function EditUser() {
-    const [inputs, setInputs] = useState({});
+    const [inputs, setInputs] = useState({ ava: null, banner: null });
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const accounts = useSelector((state) => state.account.info);
     const handleSubmit = (event) => {
         dispatch(setAccount(inputs));
+        updateAccount(accounts._id, { ...inputs, token: accounts.token });
         event.preventDefault();
     };
     const handleChange = (event) => {
@@ -22,16 +27,21 @@ export default function EditUser() {
     const handleClickPreview = () => {
         navigate('/account');
     };
+    const handleUpload = (event) => {
+        const name = event.target.name;
+        const value = event.target.files[0];
+        setInputs((values) => ({ ...values, [name]: value }));
+    };
     return (
         <div className={styles.wrapper}>
             <h1 className={styles.title}>Profile details</h1>
             <Button outline size="large" onClick={handleClickPreview}>
                 Preview
             </Button>
-            <div className={styles.edit}>
-                <form onSubmit={handleSubmit} className={styles.form}>
+            <form onSubmit={handleSubmit} className={styles.form}>
+                <div className={styles.informationForm}>
                     <label className={styles.label}>
-                        <div className={styles.titleForm}>Username</div>
+                        <div className={styles.titleForm}>name</div>
                         <input
                             type="text"
                             name="username"
@@ -62,26 +72,55 @@ export default function EditUser() {
                     </label>
                     <label className={styles.label}>
                         <div className={styles.titleForm}>Wallet Address</div>
-                        <input disabled value={'12334'} />
+                        <input className={styles.disabled} disabled value={accounts.token} />
                     </label>
-                    <input
-                        disabled={!inputs.username && !inputs.email && !inputs.bio}
-                        className={styles.submit}
-                        type="submit"
-                        value="Save"
-                    />
-                </form>
+                    <input disabled={!inputs} className={styles.submit} type="submit" value="Save" />
+                </div>
                 <div className={styles.profiles}>
                     <div className={styles.profile}>
                         <div className={styles.titleForm}>Profile Image</div>
-                        <img src={images.default} alt="ProfileImage" className={styles.images} />
+                        <img
+                            src={inputs.ava !== null ? URL.createObjectURL(inputs.ava) : images.default}
+                            alt="ProfileImage"
+                            className={styles.images}
+                        />
+                        <input
+                            name="ava"
+                            onChange={handleUpload}
+                            accept="image/*"
+                            id="ava"
+                            type="file"
+                            style={{ display: 'none' }}
+                        />
+                        <label htmlFor="ava">
+                            <div className={styles.imagesEdit}>
+                                <FontAwesomeIcon icon={faPen} className={styles.edit} />
+                            </div>
+                        </label>
                     </div>
                     <div className={styles.profile}>
                         <div className={styles.titleForm}>Profile Banner</div>
-                        <img src={images.default} alt="ProfileBanner" className={styles.banner} />
+                        <img
+                            src={inputs.banner !== null ? URL.createObjectURL(inputs.banner) : images.default}
+                            alt="ProfileBanner"
+                            className={styles.banner}
+                        />
+                        <input
+                            onChange={handleUpload}
+                            name="banner"
+                            accept="image/*"
+                            id="banner"
+                            type="file"
+                            style={{ display: 'none' }}
+                        />
+                        <label htmlFor="banner">
+                            <div className={styles.bannerEdit}>
+                                <FontAwesomeIcon icon={faPen} className={styles.edit} />
+                            </div>
+                        </label>
                     </div>
                 </div>
-            </div>
+            </form>
         </div>
     );
 }

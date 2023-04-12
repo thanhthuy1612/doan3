@@ -1,7 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit';
+import images from '~/assets/images';
 
 const initialState = {
-    info: {},
+    info: {
+        wallet: '',
+        banner: images.default,
+        ava: images.default,
+    },
     walletAddress: '',
 };
 

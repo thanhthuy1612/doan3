@@ -50,6 +50,10 @@
     position: relative;
     border: 1px solid rgb(227, 227, 227);
 
+    &:hover {
+        box-shadow: rgba(0, 0, 0, 0.1) 0px 5px 10px;
+    }
+
     input {
         flex: 1;
         height: 100%;
@@ -57,7 +61,7 @@
         font-size: 1.6rem;
         background-color: transparent;
 
-        &:not(:placeholder-shown)~.searchButton {
+        &:not(:placeholder-shown) ~ .searchButton {
             color: var(--primary-black);
         }
     }
@@ -83,6 +87,9 @@
 }
 
 .listIcon {
+    display: flex;
+    align-items: center;
+
     .icon {
         width: 30px;
         height: 30px;
@@ -90,4 +97,53 @@
         padding: 0 10px;
         color: var(--text-color);
     }
+}
+
+.wallet {
+    height: 46px;
+    display: flex;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    align-items: center;
+    border-radius: 10px;
+    margin-right: 20px;
+
+    .walletButton {
+        height: 100%;
+        display: flex;
+        align-items: center;
+        padding: 0 10px;
+        border-right: 1px rgba(0, 0, 0, 0.12) solid;
+        border-bottom-left-radius: 10px;
+        border-top-left-radius: 10px;
+        &:hover {
+            box-shadow: rgba(0, 0, 0, 0.1) 0px 5px 10px;
+        }
+    }
+    .iconWallet {
+        width: 16px;
+        height: 16px;
+        padding-right: 10px;
+    }
+    .text {
+        font-size: 16px;
+    }
+    .iconUser {
+        height: 20px;
+        background-color: transparent;
+        background-color: white;
+    }
+    .buttonUser {
+        height: 100%;
+        padding: 0 10px;
+        border-bottom-right-radius: 10px;
+        border-top-right-radius: 10px;
+        background-color: white;
+        &:hover {
+            box-shadow: rgba(0, 0, 0, 0.1) 0px 5px 10px;
+        }
+    }
+}
+
+.wallet * {
+    cursor: pointer;
 }
