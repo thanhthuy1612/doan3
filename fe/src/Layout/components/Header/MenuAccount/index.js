@@ -6,12 +6,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchTest } from '~/redux';
 import { useNavigate } from 'react-router-dom';
 
-export default function MenuAccount() {
+export default function MenuAccount({ walletAddress }) {
     const dispatch = useDispatch();
-    const walletAddress = useSelector((state) => state.account.info);
     const navigate = useNavigate();
-    console.log(walletAddress?._id, walletAddress?.wallet, walletAddress);
-    const menu = [
+    var menu = [
         {
             icon: <FontAwesomeIcon icon={faUser} />,
             title: 'Profile',

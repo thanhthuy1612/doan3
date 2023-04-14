@@ -3,7 +3,7 @@ import Tippy from '@tippyjs/react/headless';
 import { Wrapper as PopperWrapper } from '../../Popper';
 import MenuItem from './MenuItem';
 import HeaderMenu from './Header';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const defaultFn = () => {};
 
@@ -13,6 +13,9 @@ export default function Menu({ children, items = [], onChange = defaultFn }) {
     const handleBack = () => {
         setHistory((pre) => pre.slice(0, pre.length - 1));
     };
+    useEffect(() => {
+        setHistory([{ data: items }]);
+    }, [items]);
 
     const renderItems = () => {
         return current.data.map((item, index) => (
