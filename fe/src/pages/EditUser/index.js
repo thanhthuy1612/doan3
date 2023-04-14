@@ -1,23 +1,31 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Button from '~/Layout/components/Button';
 import styles from './EditUser.module.scss';
 import images from '~/assets/images';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { setAccount } from '~/redux/reducer/Account';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPen } from '@fortawesome/free-solid-svg-icons';
-import { updateAccount } from '~/api/account';
+import { getAccount, updateAccount } from '~/api/account';
 
 export default function EditUser() {
     const [inputs, setInputs] = useState({ ava: null, banner: null });
+    const params = useParams();
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const accounts = useSelector((state) => state.account.info);
+    const fetch = async () => {
+        const result = await getAccount(params.id);
+        dispatch(setAccount(result[0]));
+    };
+    useEffect(() => {
+        fetch();
+    }, []);
     const handleSubmit = (event) => {
-        dispatch(setAccount(inputs));
-        updateAccount(accounts._id, { ...inputs, token: accounts.token });
-        event.preventDefault();
+        updateAccount(accounts._id, { ...inputs, wallet: accounts.wallet });
+        dispatch(setAccount({ ...inputs, wallet: accounts.wallet }));
+        navigate(`/account/${params.id}`);
     };
     const handleChange = (event) => {
         const name = event.target.name;
@@ -25,7 +33,7 @@ export default function EditUser() {
         setInputs((values) => ({ ...values, [name]: value }));
     };
     const handleClickPreview = () => {
-        navigate('/account');
+        navigate(`/account/${params.id}`);
     };
     const handleUpload = (event) => {
         const name = event.target.name;
@@ -72,7 +80,7 @@ export default function EditUser() {
                     </label>
                     <label className={styles.label}>
                         <div className={styles.titleForm}>Wallet Address</div>
-                        <input className={styles.disabled} disabled value={accounts.token} />
+                        <input className={styles.disabled} disabled value={accounts?.wallet} />
                     </label>
                     <input disabled={!inputs} className={styles.submit} type="submit" value="Save" />
                 </div>

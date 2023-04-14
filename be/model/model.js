@@ -26,6 +26,9 @@ const accountScheme = new mongoose.Schema({
   timeJoin: {
     type: Date,
   },
+  refreshToken: {
+    type: String,
+  },
   pictures: [
     {
       type: mongoose.Schema.Types.ObjectId,

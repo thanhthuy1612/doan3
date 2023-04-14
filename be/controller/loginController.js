@@ -1,33 +1,21 @@
-const { User } = require("../model/model");
+const { User, Account } = require("../model/model");
 
 const jwt = require("jsonwebtoken");
+const ethers = require("ethers");
 const dotenv = require("dotenv");
 dotenv.config();
-
-let wallets = [
-  {
-    id: 1,
-    wallet: "1",
-    refreshToken: null,
-  },
-  {
-    id: 2,
-    wallet: "2",
-    refreshToken: null,
-  },
-];
 
 const generateTokens = (payload) => {
   const { wallet } = payload;
   try {
     const accessToken = jwt.sign({ wallet }, process.env.ACCESS_TOKEN_SECRET, {
-      expiresIn: "60s",
+      expiresIn: "10h",
     });
     const refreshToken = jwt.sign(
       { wallet },
       process.env.ACCESS_TOKEN_SECRET_REFRESH,
       {
-        expiresIn: "1h",
+        expiresIn: "10h",
       }
     );
     return { accessToken, refreshToken };
@@ -38,7 +26,7 @@ const generateTokens = (payload) => {
 
 const updateRefresh = async (wallet, refreshToken) => {
   try {
-    await User.findByIdAndUpdate(wallet._id, {
+    await Account.findByIdAndUpdate(wallet._id, {
       $set: { refreshToken: refreshToken },
     });
   } catch (err) {
@@ -48,15 +36,26 @@ const updateRefresh = async (wallet, refreshToken) => {
 
 const loginController = {
   login: async (req, res) => {
-    const account = await User.find({ wallet: req.body.wallet });
-    if (!account[0]) return res.status(401).json({ status: "false" });
-
-    try {
-      const tokens = generateTokens(account[0]);
-      updateRefresh(account[0], tokens.refreshToken);
-      res.status(200).json(tokens);
-    } catch (err) {
-      res.status(500).json(err);
+    const verify = ethers.utils.verifyMessage("Login", req.body.sign);
+    const account = await Account.find({ wallet: verify });
+    if (!account[0]) {
+      try {
+        const account = new Account({ wallet: verify });
+        const saveAccount = await account.save();
+        const tokens = generateTokens(saveAccount);
+        updateRefresh(saveAccount, tokens.refreshToken);
+        res.status(200).json(saveAccount);
+      } catch (err) {
+        res.status(500).json(err);
+      }
+    } else {
+      try {
+        const tokens = generateTokens(account[0]);
+        updateRefresh(account[0], tokens.refreshToken);
+        res.status(200).json(account[0]);
+      } catch (err) {
+        res.status(500).json(err);
+      }
     }
   },
   get: async (req, res) => {
@@ -86,11 +85,19 @@ const loginController = {
   },
   delete: async (req, res) => {
     try {
-      const account = await User.find({ wallet: req.wallet });
+      const account = await Account.find({ wallet: req.wallet });
       updateRefresh(account[0], null);
       res.status(200).json("success");
     } catch (err) {
       res.status(500).json(err);
+    }
+  },
+  deleteUser: async (req, res) => {
+    try {
+      await User.findByIdAndDelete(req.params.id);
+      res.status(200).json("success");
+    } catch (err) {
+      res.status(200).json(err);
     }
   },
 };

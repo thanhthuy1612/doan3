@@ -5,9 +5,6 @@ const accountController = {
     try {
       const account = new Account(req.body);
       const saveAccount = await account.save();
-      const user = new User(req.body);
-      const saveUser = await user.save();
-      console.log(saveUser);
       res.status(200).json(saveAccount);
     } catch (err) {
       res.status(500).json(err);

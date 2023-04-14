@@ -9,8 +9,8 @@ const publicRoutes = [
     { path: '/', component: Home },
     { path: '/drops', component: Drops },
     { path: '/ranking', component: Stats },
-    { path: '/account', component: Account },
-    { path: '/account/profile', component: EditUser, layout: EditLayout },
+    { path: '/account/:id', component: Account },
+    { path: '/account/profile/:id', component: EditUser, layout: EditLayout },
 ];
 
 const privateRoutes = [];

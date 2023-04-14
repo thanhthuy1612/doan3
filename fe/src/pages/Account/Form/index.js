@@ -4,15 +4,40 @@ import images from '~/assets/images';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPen } from '@fortawesome/free-solid-svg-icons';
 export default function Form() {
-    const [inputs, setInputs] = useState({ update: null });
+    const [inputs, setInputs] = useState({ img: null });
     const handleChange = (event) => {
         const name = event.target.name;
-        const value = name === 'img' ? event.target.value : event.target.files[0];
+        const value = event.target.value;
+        setInputs((values) => ({ ...values, [name]: value }));
+    };
+    const handleUpload = (event) => {
+        const name = event.target.name;
+        const value = event.target.files[0];
         setInputs((values) => ({ ...values, [name]: value }));
     };
     const handleSubmit = () => {};
     return (
         <form onSubmit={handleSubmit} className={styles.form}>
+            <label className={styles.labelImg}>
+                <img
+                    src={inputs.img !== null ? URL.createObjectURL(inputs.img) : images.default}
+                    alt="ProfileImage"
+                    className={styles.images}
+                />
+                <input
+                    name="img"
+                    onChange={handleUpload}
+                    accept="image/*"
+                    id="img"
+                    type="file"
+                    style={{ display: 'none' }}
+                />
+                <label htmlFor="img">
+                    <div className={styles.imagesEdit}>
+                        <FontAwesomeIcon icon={faPen} className={styles.edit} />
+                    </div>
+                </label>
+            </label>
             <div className={styles.information}>
                 <label className={styles.label}>
                     <div className={styles.titleForm}>Title</div>
@@ -34,34 +59,15 @@ export default function Form() {
                         onChange={handleChange}
                     />
                 </label>
-                <input
-                    disabled={!inputs.username && !inputs.email && !inputs.bio}
-                    className={styles.submit}
-                    type="submit"
-                    value="Save"
-                />
-            </div>
-            <label className={styles.label}>
-                <div className={styles.titleForm}>Update Image</div>
-                <img
-                    src={inputs.update !== null ? URL.createObjectURL(inputs.update) : images.default}
-                    alt="ProfileImage"
-                    className={styles.images}
-                />
-                <input
-                    name="img"
-                    onChange={handleChange}
-                    accept="image/*"
-                    id="img"
-                    type="file"
-                    style={{ display: 'none' }}
-                />
-                <label htmlFor="img">
-                    <div className={styles.imagesEdit}>
-                        <FontAwesomeIcon icon={faPen} className={styles.edit} />
-                    </div>
+                <label className={styles.labelSubmit}>
+                    <input
+                        disabled={!inputs.username && !inputs.email && !inputs.bio}
+                        className={styles.submit}
+                        type="submit"
+                        value="Save"
+                    />
                 </label>
-            </label>
+            </div>
         </form>
     );
 }

@@ -2051,6 +2051,11 @@
     redux-thunk "^2.4.2"
     reselect "^4.1.7"
 
+"@rematch/core@^2.2.0":
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/@rematch/core/-/core-2.2.0.tgz#c4e6cc9d369d341afe2345842f43c255b7a44e90"
+  integrity sha512-Sj3nC/2X+bOBZeOf4jdJ00nhCcx9wLbVK9SOs6eFR4Y1qKXqRY0hGigbQgfTpCdjRFlwTHHfN3m41MlNvMhDgw==
+
 "@remix-run/router@1.4.0":
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/@remix-run/router/-/router-1.4.0.tgz#74935d538e4df8893e47831a7aea362f295bcd39"
