@@ -2,12 +2,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Menu from '../Popper/Menu';
 import styles from './MenuAccount.module.scss';
 import { faEarthAsia, faEye, faGear, faHeart, faMoon, faPen, faTable, faUser } from '@fortawesome/free-solid-svg-icons';
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchTest } from '~/redux';
 import { useNavigate } from 'react-router-dom';
 
 export default function MenuAccount({ walletAddress }) {
-    const dispatch = useDispatch();
     const navigate = useNavigate();
     var menu = [
         {
@@ -61,7 +58,6 @@ export default function MenuAccount({ walletAddress }) {
     ];
 
     const handTest = () => {
-        //dispatch(fetchTest(test));
         navigate(`/account/${walletAddress?._id}`);
     };
     const handleChangeMenu = async () => {};

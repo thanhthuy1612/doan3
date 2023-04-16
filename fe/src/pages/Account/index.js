@@ -20,7 +20,7 @@ export default function Account() {
     };
     const fetch = async () => {
         const result = await getAccount(params.id);
-        dispatch(setAccount(result[0]));
+        dispatch(setAccount(result));
     };
 
     useEffect(() => {

@@ -6,23 +6,19 @@ import { getToken } from '~/api/login';
 
 const initialState = {
     info: undefined,
-    wallet: {},
 };
-export const fetchTest = createAsyncThunk('wallet', async (wallet) => {
+export const fetchConnect = createAsyncThunk('wallet', async (wallet, thunkAPI) => {
     const reconnect = async ({ provider }) => {
         const web3Provider = new ethers.providers.Web3Provider(provider);
         const signer = web3Provider.getSigner();
-        if (wallet !== {}) {
+        if (wallet !== undefined) {
             const address = await signer.getAddress();
             const result = await checkAccount(address);
-            console.log(result[0], '1');
-            return result[0];
+            thunkAPI.dispatch(setAccount(result[0]));
         } else {
             const sign = await signer.signMessage('Login');
             const result = await getToken(sign);
-            console.log(result[0], '2');
-
-            return result;
+            thunkAPI.dispatch(setAccount(result));
         }
     };
     try {
@@ -31,16 +27,13 @@ export const fetchTest = createAsyncThunk('wallet', async (wallet) => {
             method: 'eth_requestAccounts',
         });
 
-        provider.on('chainChanged', async function (networkId) {
-            console.log(await reconnect({ provider }), '3');
-            return await reconnect({ provider });
+        provider.on('chainChanged', async function () {
+            await reconnect({ provider });
         });
-        provider.on('accountsChanged', async function (accounts) {
-            console.log(await reconnect({ provider }), '4');
-            return await reconnect({ provider });
+        provider.on('accountsChanged', async function () {
+            await reconnect({ provider });
         });
-        console.log(await reconnect({ provider }), '5');
-        return await reconnect({ provider });
+        await reconnect({ provider });
     } catch (err) {
         console.log(err);
     }
@@ -55,14 +48,10 @@ export const account = createSlice({
         },
     },
     extraReducers: (builder) => {
-        builder.addCase(fetchTest.fulfilled, (state, action) => {
-            console.log('123');
-            console.log(fetchTest, action, 'payload');
-            state.wallet = action.payload;
-        });
+        builder.addCase(fetchConnect.fulfilled, (state, action) => {});
     },
 });
 const accountReducer = account.reducer;
 
-export const { setAccount, setWallet } = account.actions;
+export const { setAccount } = account.actions;
 export default accountReducer;

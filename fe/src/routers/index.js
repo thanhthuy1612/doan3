@@ -11,6 +11,11 @@ const publicRoutes = [
     { path: '/ranking', component: Stats },
     { path: '/account/:id', component: Account },
     { path: '/account/profile/:id', component: EditUser, layout: EditLayout },
+    { path: '/account/earing/:id', component: EditUser, layout: EditLayout },
+    { path: '/account/support/:id', component: EditUser, layout: EditLayout },
+    { path: '/account/offers/:id', component: EditUser, layout: EditLayout },
+    { path: '/account/notification/:id', component: EditUser, layout: EditLayout },
+    { path: '/account/featured/:id', component: EditUser, layout: EditLayout },
 ];
 
 const privateRoutes = [];

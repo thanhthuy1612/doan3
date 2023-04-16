@@ -1,4 +1,4 @@
-const { Account, User } = require("../model/model");
+const { Account } = require("../model/model");
 
 const accountController = {
   add: async (req, res) => {
@@ -52,6 +52,13 @@ const accountController = {
       res.status(200).json("success");
     } catch (err) {
       res.status(500).json(err);
+    }
+  },
+  postImg: async (req, res) => {
+    try {
+      console.log(req.file);
+    } catch (err) {
+      console.log(err);
     }
   },
 };

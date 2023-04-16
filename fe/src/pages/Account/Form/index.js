@@ -61,7 +61,7 @@ export default function Form() {
                 </label>
                 <label className={styles.labelSubmit}>
                     <input
-                        disabled={!inputs.username && !inputs.email && !inputs.bio}
+                        disabled={!inputs.img && !inputs.title && !inputs.price}
                         className={styles.submit}
                         type="submit"
                         value="Save"
