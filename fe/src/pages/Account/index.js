@@ -29,8 +29,18 @@ export default function Account() {
     return (
         <div className={styles.wrapper}>
             <div className={styles.header}>
-                <img className={styles.banner} src={walletAddress?.banner || defaultAccount.banner} alt="imageBanner" />
-                <img className={styles.ava} src={walletAddress?.ava || defaultAccount.ava} alt="ava" />
+                <img
+                    className={styles.banner}
+                    src={
+                        walletAddress?.banner ? require('../../public/' + walletAddress?.banner) : defaultAccount.banner
+                    }
+                    alt="imageBanner"
+                />
+                <img
+                    className={styles.ava}
+                    src={walletAddress?.ava ? require('../../public/' + walletAddress.ava) : defaultAccount.ava}
+                    alt="ava"
+                />
             </div>
             <div className={styles.inner}>
                 <div className={styles.profile}>

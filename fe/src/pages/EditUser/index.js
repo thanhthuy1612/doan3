@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setAccount } from '~/redux/reducer/Account';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPen } from '@fortawesome/free-solid-svg-icons';
-import { getAccount, postTest, updateAccount } from '~/api/account';
+import { getAccount, updateAccount } from '~/api/account';
 
 export default function EditUser() {
     const [inputs, setInputs] = useState({ ava: null, banner: null });
@@ -22,9 +22,9 @@ export default function EditUser() {
     useEffect(() => {
         fetch();
     }, []);
-    const handleSubmit = () => {
+    const handleSubmit = (event) => {
+        event.preventDefault();
         updateAccount(accounts._id, { ...inputs, wallet: accounts.wallet });
-        dispatch(setAccount({ ...inputs, wallet: accounts.wallet }));
         navigate(`/account/${params.id}`);
     };
     const handleChange = (event) => {
@@ -40,19 +40,11 @@ export default function EditUser() {
         const value = event.target.files[0];
         setInputs((values) => ({ ...values, [name]: value }));
     };
-    const handleClickTest = () => {
-        let formData = new FormData();
-        formData.append('file', inputs.ava);
-        postTest(accounts._id, formData);
-    };
     return (
         <div className={styles.wrapper}>
             <h1 className={styles.title}>Profile details</h1>
             <Button outline size="large" onClick={handleClickPreview}>
                 Preview
-            </Button>
-            <Button outline size="large" onClick={handleClickTest}>
-                Test
             </Button>
             <form onSubmit={handleSubmit} className={styles.form}>
                 <div className={styles.informationForm}>

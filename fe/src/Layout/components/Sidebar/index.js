@@ -16,8 +16,8 @@ export default function Sidebar({ title, items }) {
         <aside className={styles.wrapper}>
             <div className={styles.title}>{title}</div>
             {items.map((item, index) => (
-                <button className={styles.menu} onClick={() => handleClick(index)}>
-                    <MenuItem data={item} key={index} choose={state.choose === index} />
+                <button key={index} className={styles.menu} onClick={() => handleClick(index)}>
+                    <MenuItem data={item} choose={state.choose === index} />
                 </button>
             ))}
         </aside>

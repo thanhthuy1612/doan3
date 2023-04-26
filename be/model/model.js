@@ -38,16 +38,7 @@ const accountScheme = new mongoose.Schema({
 });
 
 const pictureScheme = new mongoose.Schema({
-  title: {
-    type: String,
-  },
-  img: {
-    type: String,
-  },
-  time: {
-    type: String,
-  },
-  price: {
+  url: {
     type: String,
   },
   account: {

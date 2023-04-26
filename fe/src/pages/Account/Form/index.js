@@ -1,26 +1,48 @@
-import { useState } from 'react';
-import styles from './Form.module.scss';
-import images from '~/assets/images';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPen } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { create } from 'ipfs-http-client';
+import { useState } from 'react';
+import { useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
+import images from '~/assets/images';
+import styles from './Form.module.scss';
+import { postPicture } from '~/api/picture';
+
+const client = create('http://14.225.254.58/api/v0');
+
 export default function Form() {
-    const [inputs, setInputs] = useState({ img: null });
-    const handleChange = (event) => {
+    const [inputs, setInputs] = useState({ fileImg: null });
+    const items = useSelector((state) => state.account.items);
+    console.log(items, '123');
+    const handleChange = async (event) => {
         const name = event.target.name;
         const value = event.target.value;
         setInputs((values) => ({ ...values, [name]: value }));
     };
-    const handleUpload = (event) => {
+    const params = useParams();
+    const handleUpload = async (event) => {
         const name = event.target.name;
         const value = event.target.files[0];
-        setInputs((values) => ({ ...values, [name]: value }));
+        try {
+            const added = await client.add(value, {
+                progress: (prog) => console.log(`received: ${prog}`),
+            });
+            const url = `https://ipfs.io/ipfs/${added.path}`;
+            setInputs((values) => ({ ...values, [name]: url, fileImg: value }));
+        } catch (error) {
+            console.log('Error uploading file: ', error);
+        }
     };
-    const handleSubmit = () => {};
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+        postPicture(params.id, { ...inputs });
+        setInputs({ fileImg: null });
+    };
     return (
         <form onSubmit={handleSubmit} className={styles.form}>
             <label className={styles.labelImg}>
                 <img
-                    src={inputs.img !== null ? URL.createObjectURL(inputs.img) : images.default}
+                    src={inputs.fileImg !== null ? URL.createObjectURL(inputs.fileImg) : images.default}
                     alt="ProfileImage"
                     className={styles.images}
                 />
@@ -61,7 +83,7 @@ export default function Form() {
                 </label>
                 <label className={styles.labelSubmit}>
                     <input
-                        disabled={!inputs.img && !inputs.title && !inputs.price}
+                        disabled={!inputs.img || !inputs.title || !inputs.price}
                         className={styles.submit}
                         type="submit"
                         value="Save"

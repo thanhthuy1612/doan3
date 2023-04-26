@@ -22,8 +22,22 @@ export const checkAccount = async (account) => {
 
 export const updateAccount = async (id, option = {}) => {
     try {
-        const res = await update(`${path}/${id}`, { ...option });
-        return res;
+        if (option.ava !== null) {
+            const inputAva = new FormData();
+            inputAva.append('ava', option.ava);
+            var resAva = await update(`${path}/ava/${id}`, inputAva);
+        }
+        if (option.banner !== null) {
+            const inputBanner = new FormData();
+            inputBanner.append('banner', option.banner);
+            var resBanner = await update(`${path}/banner/${id}`, inputBanner);
+        }
+        delete option.ava;
+        delete option.banner;
+        if (option.username || option.bio || option.email) {
+            var res = await update(`${path}/${id}`, { ...option });
+        }
+        return { res, resAva, resBanner };
     } catch (err) {
         console.log(err);
     }

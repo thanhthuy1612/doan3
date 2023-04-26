@@ -16,7 +16,7 @@ const pictureController = {
   },
   getAll: async (req, res) => {
     try {
-      const pictures = await Picture.find().populate("account");
+      const pictures = await Picture.find();
       res.status(200).json(pictures);
     } catch (err) {
       res.status(500).json(err);

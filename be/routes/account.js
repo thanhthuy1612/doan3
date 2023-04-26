@@ -1,6 +1,6 @@
 const accountController = require("../controller/accountController");
 const verifyToken = require("../middleware/auth");
-const upload = require("../middleware/uploadImage");
+const fileUploader = require("../middleware/uploadImage");
 
 const router = require("express").Router();
 
@@ -11,8 +11,12 @@ router.get("/:id", accountController.getById);
 router.get("/search/:wallet", accountController.getByAccount);
 
 router.put("/:id", accountController.update);
-
-router.post("/:id", upload.single("ava"), accountController.postImg);
+router.put("/ava/:id", fileUploader.single("ava"), accountController.updateAva);
+router.put(
+  "/banner/:id",
+  fileUploader.single("banner"),
+  accountController.updateBanner
+);
 
 router.delete("/:id", accountController.delete);
 

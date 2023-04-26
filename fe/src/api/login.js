@@ -1,5 +1,4 @@
-import { post } from '~/utils/api';
-
+const { post } = require('~/utils/api');
 const { url } = require('./url');
 
 const path = url.login;
