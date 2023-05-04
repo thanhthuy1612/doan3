@@ -47,17 +47,7 @@ const pictureScheme = new mongoose.Schema({
   },
 });
 
-const userScheme = new mongoose.Schema({
-  wallet: {
-    type: String,
-  },
-  refreshToken: {
-    type: String,
-  },
-});
-
 let Account = mongoose.model("Account", accountScheme);
 let Picture = mongoose.model("Picture", pictureScheme);
-let User = mongoose.model("User", userScheme);
 
-module.exports = { Account, Picture, User };
+module.exports = { Account, Picture };

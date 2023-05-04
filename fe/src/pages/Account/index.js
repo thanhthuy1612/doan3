@@ -8,6 +8,7 @@ import { useEffect } from 'react';
 import Personal from './Personal';
 import { setAccount } from '~/redux';
 import { getAccount } from '~/api/account';
+import Tippy from '@tippyjs/react/headless';
 
 export default function Account() {
     const defaultAccount = MyAccount;
@@ -51,8 +52,12 @@ export default function Account() {
                     </div>
                 </div>
                 <div className={styles.listIcon}>
-                    <FontAwesomeIcon className={styles.icon} icon={faPen} onClick={handleClickEdit} />
-                    <FontAwesomeIcon className={styles.icon} icon={faShare} />
+                    <Tippy content="Edit">
+                        <FontAwesomeIcon className={styles.icon} icon={faPen} onClick={handleClickEdit} />
+                    </Tippy>
+                    <Tippy content="Share">
+                        <FontAwesomeIcon className={styles.icon} icon={faShare} />
+                    </Tippy>
                 </div>
             </div>
             <Personal />

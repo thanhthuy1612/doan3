@@ -9,13 +9,16 @@ import { useNavigate } from 'react-router-dom';
 export default function Drop() {
     const [select, setSelect] = useState(0);
     const items = useSelector((state) => state.account.items);
+    const info = useSelector((state) => state.account.info);
     const dispatch = useDispatch();
     const navigate = useNavigate();
     var today = new Date();
     var date = today.getDate() + '-' + (today.getMonth() + 1) + '-' + today.getFullYear();
     useEffect(() => {
-        dispatch(fetchMarketItem());
-    }, []);
+        if (info) {
+            dispatch(fetchMarketItem());
+        }
+    }, [info]);
     const handleClick = (item) => {
         dispatch(setItem(item));
         navigate(`/item/${item.tokenId}`);
@@ -29,30 +32,46 @@ export default function Drop() {
                 </TabList>
 
                 <TabPanel className={styles.tabPanel}>
-                    {items
-                        .filter((x) => x?.meta?.time === date)
-                        .map((item, index) => (
-                            <ButtonCategory
-                                onClick={() => {
-                                    handleClick(item);
-                                }}
-                                key={index}
-                                item={item}
-                            />
-                        ))}
+                    {info ? (
+                        items.filter((x) => x?.meta?.time === date).length === 0 ? (
+                            <p className={styles.title}>Don't have item.</p>
+                        ) : (
+                            items
+                                .filter((x) => x?.meta?.time === date)
+                                .map((item, index) => (
+                                    <ButtonCategory
+                                        onClick={() => {
+                                            handleClick(item);
+                                        }}
+                                        key={index}
+                                        item={item}
+                                    />
+                                ))
+                        )
+                    ) : (
+                        <p className={styles.title}>Please connect wallet</p>
+                    )}
                 </TabPanel>
                 <TabPanel className={styles.tabPanel}>
-                    {items
-                        .filter((x) => x?.meta?.time !== date)
-                        .map((item, index) => (
-                            <ButtonCategory
-                                onClick={() => {
-                                    handleClick(item);
-                                }}
-                                key={index}
-                                item={item}
-                            />
-                        ))}
+                    {info ? (
+                        items.filter((x) => x?.meta?.time !== date).length === 0 ? (
+                            <p className={styles.title}>Don't have item.</p>
+                        ) : (
+                            items
+                                .filter((x) => x?.meta?.time !== date)
+                                .map((item, index) => (
+                                    <ButtonCategory
+                                        onClick={() => {
+                                            handleClick(item);
+                                        }}
+                                        key={index}
+                                        item={item}
+                                    />
+                                ))
+                        )
+                    ) : (
+                        <p className={styles.title}>Please connect wallet</p>
+                    )}
                 </TabPanel>
             </Tabs>
         </div>

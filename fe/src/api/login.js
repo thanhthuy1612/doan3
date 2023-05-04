@@ -6,7 +6,7 @@ const path = url.login;
 export const getToken = async (sign) => {
     try {
         const res = await post(path, { sign: sign });
-        return res.data;
+        return { ...res.data.data, ...res.data.accessToken };
     } catch (err) {
         console.log(err);
     }

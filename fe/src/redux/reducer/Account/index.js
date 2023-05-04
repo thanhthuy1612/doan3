@@ -125,7 +125,7 @@ export const account = createSlice({
         },
     },
     extraReducers: (builder) => {
-        builder.addCase(fetchConnect.fulfilled, (state, action) => {});
+        builder.addCase(fetchConnect.pending, (state, action) => {});
         builder.addCase(fetchMarketItem.fulfilled, (state, actions) => {
             state.items = actions.payload;
         });
