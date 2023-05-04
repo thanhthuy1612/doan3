@@ -17,5 +17,4 @@ export const ListDrops = [
     { title: 'Monster', img: images.ava5, item: 'Now', price: '0.0065 ETH' },
     { title: 'PARTS', img: images.ava4, item: 'Apr 11', price: '0.0065 ETH' },
     { title: 'PARTS', img: images.ava3, item: 'Now', price: '0.0065 ETH' },
-    { title: 'Novawchi', img: images.ava10, item: 'Apr 15', price: '0.0065 ETH' },
 ];

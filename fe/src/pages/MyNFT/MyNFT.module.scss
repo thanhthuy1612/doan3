@@ -1,0 +1,125 @@
+.wrapper {
+    text-align: left;
+    .back {
+        padding-top: 10px;
+        display: flex;
+        align-items: center;
+        .icon {
+            width: 24px;
+            height: 24px;
+            cursor: pointer;
+            border-radius: 50%;
+            &:hover {
+                box-shadow: rgba(0, 0, 0, 0.12) 0px 2px 10px;
+            }
+        }
+        .text {
+            margin-left: 10px;
+            font-size: 18px;
+            font-weight: 500;
+        }
+    }
+    .body {
+        margin-top: 20px;
+        display: flex;
+        width: 100%;
+    }
+    .meta {
+        padding-left: 30px;
+        display: flex;
+        width: 700px;
+        height: 500px;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    .imgMeta {
+        width: 500px;
+        height: 500px;
+        border-radius: 15px;
+    }
+    .metaTitle {
+        font-weight: 600;
+        font-size: 30px;
+    }
+    .metaSeller {
+        display: flex;
+        font-size: 18px;
+    }
+    .seller {
+        padding-right: 10px;
+    }
+    .link {
+        color: var(--primary-black);
+        text-decoration: underline !important;
+        cursor: pointer;
+    }
+    .time {
+        width: 100%;
+        border-radius: 15px;
+        border: 1px var(--default-gray) solid;
+    }
+    .clock {
+        padding: 20px;
+        display: flex;
+        align-items: center;
+        width: 100%;
+        border-bottom: 1px var(--default-gray) solid;
+        .clockItem {
+            width: 20px;
+            height: 20px;
+            padding-right: 14px;
+        }
+    }
+    .textTime {
+        font-weight: 400;
+        font-size: 18px;
+    }
+    .price {
+        padding: 20px;
+        .priceTitle {
+            font-size: 22px;
+        }
+        .priceText {
+            font-weight: 600;
+            font-size: 40px;
+        }
+    }
+    .button {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin: 10px;
+        border-radius: 15px;
+        border: 1px solid var(--default-gray);
+    }
+    .buttonBuy {
+        width: 550px;
+        height: 70px;
+        cursor: pointer;
+        border-top-left-radius: 15px;
+        border-bottom-left-radius: 15px;
+        &:hover {
+            box-shadow: rgba(0, 0, 0, 0.12) 0px 2px 10px;
+        }
+        &.disable {
+            pointer-events: none;
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+    }
+    .buttonIcon {
+        width: 30px;
+        height: 30px;
+        margin-right: 34px;
+        cursor: pointer;
+    }
+}
+
+.input {
+    width: 100%;
+    border-radius: 15px;
+    border: 1px solid var(--default-gray);
+    padding: 15px;
+    margin-top: 5px;
+}

@@ -4,7 +4,7 @@ export const MyAccount = {
     username: 'Unnamed',
     bio: '',
     email: '',
-    banner: images.default,
-    ava: images.default,
+    banner: images.default_banner,
+    ava: images.default_ava,
     token: images.ethereum,
 };

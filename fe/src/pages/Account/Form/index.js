@@ -2,18 +2,14 @@ import { faPen } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { create } from 'ipfs-http-client';
 import { useState } from 'react';
-import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import images from '~/assets/images';
 import styles from './Form.module.scss';
 import { postPicture } from '~/api/picture';
-
 const client = create('http://14.225.254.58/api/v0');
 
 export default function Form() {
     const [inputs, setInputs] = useState({ fileImg: null });
-    const items = useSelector((state) => state.account.items);
-    console.log(items, '123');
     const handleChange = async (event) => {
         const name = event.target.name;
         const value = event.target.value;

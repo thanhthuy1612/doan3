@@ -4,6 +4,9 @@ import Stats from '~/pages/Stats';
 import EditUser from '~/pages/EditUser';
 import EditLayout from '~/Layout/EditLayout';
 import Account from '~/pages/Account';
+import Item from '~/pages/Item';
+import Seller from '~/pages/Seller';
+import MyNFT from '~/pages/MyNFT';
 
 const publicRoutes = [
     { path: '/', component: Home },
@@ -16,6 +19,9 @@ const publicRoutes = [
     { path: '/account/offers/:id', component: EditUser, layout: EditLayout },
     { path: '/account/notification/:id', component: EditUser, layout: EditLayout },
     { path: '/account/featured/:id', component: EditUser, layout: EditLayout },
+    { path: '/item/:tokenId', component: Item },
+    { path: '/account/seller/:id', component: Seller },
+    { path: '/myNFT/:id', component: MyNFT },
 ];
 
 const privateRoutes = [];

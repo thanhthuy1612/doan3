@@ -3,9 +3,12 @@ import Menu from '../Popper/Menu';
 import styles from './MenuAccount.module.scss';
 import { faEarthAsia, faEye, faGear, faHeart, faMoon, faPen, faTable, faUser } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { fetchConnect } from '~/redux';
 
 export default function MenuAccount({ walletAddress }) {
     const navigate = useNavigate();
+    const dispatch = useDispatch();
     var menu = [
         {
             icon: <FontAwesomeIcon icon={faUser} />,
@@ -57,16 +60,22 @@ export default function MenuAccount({ walletAddress }) {
         },
     ];
 
-    const handTest = () => {
+    const handleClick = async () => {
+        if (!walletAddress?._id) {
+            dispatch(fetchConnect(walletAddress));
+        }
         navigate(`/account/${walletAddress?._id}`);
     };
-    const handleChangeMenu = async () => {};
 
-    return (
-        <Menu items={menu} onChange={handleChangeMenu}>
-            <button className={styles.buttonUser} onClick={handTest}>
+    return walletAddress?._id ? (
+        <Menu items={menu}>
+            <button className={styles.buttonUser} onClick={handleClick}>
                 <FontAwesomeIcon className={styles.iconUser} icon={faUser} />
             </button>
         </Menu>
+    ) : (
+        <button className={styles.buttonUser} onClick={handleClick}>
+            <FontAwesomeIcon className={styles.iconUser} icon={faUser} />
+        </button>
     );
 }

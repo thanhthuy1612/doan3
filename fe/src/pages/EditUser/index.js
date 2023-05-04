@@ -49,7 +49,7 @@ export default function EditUser() {
             <form onSubmit={handleSubmit} className={styles.form}>
                 <div className={styles.informationForm}>
                     <label className={styles.label}>
-                        <div className={styles.titleForm}>name</div>
+                        <div className={styles.titleForm}>Name</div>
                         <input
                             type="text"
                             name="username"

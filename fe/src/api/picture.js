@@ -3,10 +3,10 @@ import { create } from 'ipfs-http-client';
 import { abi } from '~/redux/reducer/Account/abi';
 import { addressContract } from '~/redux/reducer/Account/addressContract';
 
-const { post, get } = require('~/utils/api');
-const { url } = require('./url');
+const { get } = require('~/utils/api');
+//const { url } = require('./url');
 
-const path = url.picture;
+//const path = url.picture;
 const client = create('http://14.225.254.58/api/v0');
 const uploadToIPFS = async (inputs = {}) => {
     var today = new Date();
@@ -37,8 +37,6 @@ export const postPicture = async (id, option = {}) => {
         listingPrice = listingPrice.toString();
         let transaction = await erc721.createToken(url, price, { value: listingPrice });
         await transaction.wait();
-        const res = await post(path, { url: url, account: id });
-        return res;
     } catch (err) {
         console.log(err);
     }
