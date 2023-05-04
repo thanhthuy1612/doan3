@@ -47,6 +47,16 @@
         padding: 10px;
         border-radius: 50%;
         cursor: pointer;
+    }
+    .buttonIcon {
         margin: 0 5px;
+        border-radius: 50%;
+    }
+    .content {
+        background-color: white;
+        color: var(--text-color);
+        padding: 3px 5px;
+        border-radius: 10px;
+        box-shadow: rgba(0, 0, 0, 0.1) 5px 5px 10px;
     }
 }

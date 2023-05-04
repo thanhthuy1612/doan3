@@ -29,6 +29,7 @@ export default function MyNFT() {
     };
     const handleBuy = () => {
         dispatch(resellToken({ ...item, price: resell || item.price }));
+        navigate('/');
     };
     const handleChange = (e) => {
         setResell(e.target.value);

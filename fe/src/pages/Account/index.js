@@ -26,7 +26,7 @@ export default function Account() {
 
     useEffect(() => {
         fetch();
-    }, []);
+    }, [walletAddress]);
     return (
         <div className={styles.wrapper}>
             <div className={styles.header}>
@@ -52,11 +52,29 @@ export default function Account() {
                     </div>
                 </div>
                 <div className={styles.listIcon}>
-                    <Tippy content="Edit">
-                        <FontAwesomeIcon className={styles.icon} icon={faPen} onClick={handleClickEdit} />
+                    <Tippy
+                        interactive
+                        render={(attrs) => (
+                            <div className={styles.content} tabIndex="-1" {...attrs}>
+                                Edit
+                            </div>
+                        )}
+                    >
+                        <button className={styles.buttonIcon}>
+                            <FontAwesomeIcon className={styles.icon} icon={faPen} onClick={handleClickEdit} />
+                        </button>
                     </Tippy>
-                    <Tippy content="Share">
-                        <FontAwesomeIcon className={styles.icon} icon={faShare} />
+                    <Tippy
+                        interactive
+                        render={(attrs) => (
+                            <div className={styles.content} tabIndex="-1" {...attrs}>
+                                Share
+                            </div>
+                        )}
+                    >
+                        <button className={styles.buttonIcon}>
+                            <FontAwesomeIcon className={styles.icon} icon={faShare} />
+                        </button>
                     </Tippy>
                 </div>
             </div>

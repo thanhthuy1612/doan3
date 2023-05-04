@@ -14,7 +14,7 @@ export default function Post() {
     useEffect(() => {
         dispatch(fetchItemsListed());
         dispatch(fetchMyNFTs());
-    }, [dispatch]);
+    }, [dispatch, myNFT, itemsListed]);
     const handleClickItemsList = (item) => {
         dispatch(setItem(item));
         navigate(`/item/${item.tokenId}`);

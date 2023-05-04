@@ -29,6 +29,7 @@ export default function Item() {
     const handleBuy = () => {
         console.log(item, 'item');
         dispatch(createMarketSale(item));
+        navigate('/');
     };
     return (
         <div className={styles.wrapper}>

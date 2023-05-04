@@ -3,19 +3,32 @@ import styles from './Seller.module.scss';
 import { faShare } from '@fortawesome/free-solid-svg-icons';
 import { MyAccount } from '~/constants/MyAccount';
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { getAccount } from '~/api/account';
+import Tippy from '@tippyjs/react/headless';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchMarketItem, setItem } from '~/redux';
+import ButtonCategory from '../Home/ButtonCategory';
+
 export default function Seller() {
     const defaultAccount = MyAccount;
     const param = useParams();
     const [seller, setSeller] = useState();
+    const dispatch = useDispatch();
+    const items = useSelector((state) => state.account.items);
+    const navigate = useNavigate();
     useEffect(() => {
         const fetch = async () => {
             const result = await getAccount(param.id);
             setSeller(result);
+            dispatch(fetchMarketItem());
         };
         fetch();
     }, []);
+    const handleClick = (item) => {
+        dispatch(setItem(item));
+        navigate(`/item/${item.tokenId}`);
+    };
     return (
         <div className={styles.wrapper}>
             <div className={styles.header}>
@@ -39,8 +52,32 @@ export default function Seller() {
                     </div>
                 </div>
                 <div className={styles.listIcon}>
-                    <FontAwesomeIcon className={styles.icon} icon={faShare} />
+                    <Tippy
+                        interactive
+                        render={(attrs) => (
+                            <div className={styles.content} tabIndex="-1" {...attrs}>
+                                Share
+                            </div>
+                        )}
+                    >
+                        <button className={styles.buttonIcon}>
+                            <FontAwesomeIcon className={styles.icon} icon={faShare} />
+                        </button>
+                    </Tippy>
                 </div>
+            </div>
+            <div className={styles.body}>
+                {items
+                    .filter((x) => x?.seller === seller?.wallet)
+                    .map((item, index) => (
+                        <ButtonCategory
+                            onClick={() => {
+                                handleClick(item);
+                            }}
+                            key={index}
+                            item={item}
+                        />
+                    ))}
             </div>
         </div>
     );

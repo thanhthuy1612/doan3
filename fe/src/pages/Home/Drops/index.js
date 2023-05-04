@@ -18,7 +18,7 @@ export default function Drop() {
         if (info) {
             dispatch(fetchMarketItem());
         }
-    }, [info]);
+    }, [info, items]);
     const handleClick = (item) => {
         dispatch(setItem(item));
         navigate(`/item/${item.tokenId}`);
