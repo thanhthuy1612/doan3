@@ -13,7 +13,7 @@ import Tippy from '@tippyjs/react/headless';
 export default function Account() {
     const defaultAccount = MyAccount;
     const params = useParams();
-    const walletAddress = useSelector((state) => state.account.info);
+    let walletAddress = useSelector((state) => state.account.info);
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const handleClickEdit = () => {
@@ -26,7 +26,7 @@ export default function Account() {
 
     useEffect(() => {
         fetch();
-    }, [walletAddress]);
+    }, []);
     return (
         <div className={styles.wrapper}>
             <div className={styles.header}>

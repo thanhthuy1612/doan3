@@ -11,7 +11,7 @@ import { resellToken } from '~/redux';
 export default function MyNFT() {
     const [seller, setSeller] = useState();
     const [resell, setResell] = useState();
-    const item = useSelector((state) => state.account.item);
+    let item = useSelector((state) => state.account.item);
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const handleBack = () => {

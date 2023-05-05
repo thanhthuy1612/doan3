@@ -14,7 +14,7 @@ export default function EditUser() {
     const params = useParams();
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const accounts = useSelector((state) => state.account.info);
+    let accounts = useSelector((state) => state.account.info);
     const fetch = async () => {
         const result = await getAccount(params.id);
         dispatch(setAccount(result));
@@ -22,9 +22,9 @@ export default function EditUser() {
     useEffect(() => {
         fetch();
     }, []);
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
-        updateAccount(accounts._id, { ...inputs, wallet: accounts.wallet });
+        await updateAccount(accounts._id, { ...inputs, wallet: accounts.wallet });
         navigate(`/account/${params.id}`);
     };
     const handleChange = (event) => {

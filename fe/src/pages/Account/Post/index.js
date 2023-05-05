@@ -5,16 +5,16 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchItemsListed, fetchMyNFTs, setItem } from '~/redux';
 import { useNavigate } from 'react-router-dom';
-export default function Post() {
+export default function Post({ load }) {
     const [select, setSelect] = useState(0);
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const myNFT = useSelector((state) => state.account.myNFT);
-    const itemsListed = useSelector((state) => state.account.itemsListed);
+    let myNFT = useSelector((state) => state.account.myNFT);
+    let itemsListed = useSelector((state) => state.account.itemsListed);
     useEffect(() => {
         dispatch(fetchItemsListed());
         dispatch(fetchMyNFTs());
-    }, [dispatch, myNFT, itemsListed]);
+    }, [load]);
     const handleClickItemsList = (item) => {
         dispatch(setItem(item));
         navigate(`/item/${item.tokenId}`);

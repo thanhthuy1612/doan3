@@ -8,8 +8,8 @@ import { fetchMarketItem, setItem } from '~/redux';
 import { useNavigate } from 'react-router-dom';
 export default function Drop() {
     const [select, setSelect] = useState(0);
-    const items = useSelector((state) => state.account.items);
-    const info = useSelector((state) => state.account.info);
+    let items = useSelector((state) => state.account.items);
+    let info = useSelector((state) => state.account.info);
     const dispatch = useDispatch();
     const navigate = useNavigate();
     var today = new Date();
@@ -18,7 +18,7 @@ export default function Drop() {
         if (info) {
             dispatch(fetchMarketItem());
         }
-    }, [info, items]);
+    }, [info]);
     const handleClick = (item) => {
         dispatch(setItem(item));
         navigate(`/item/${item.tokenId}`);

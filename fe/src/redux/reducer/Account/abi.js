@@ -354,6 +354,52 @@ export const abi = [
         type: 'function',
     },
     {
+        inputs: [
+            {
+                internalType: 'address',
+                name: 'sellerAddress',
+                type: 'address',
+            },
+        ],
+        name: 'fetchItemsSeller',
+        outputs: [
+            {
+                components: [
+                    {
+                        internalType: 'uint256',
+                        name: 'tokenId',
+                        type: 'uint256',
+                    },
+                    {
+                        internalType: 'address payable',
+                        name: 'seller',
+                        type: 'address',
+                    },
+                    {
+                        internalType: 'address payable',
+                        name: 'owner',
+                        type: 'address',
+                    },
+                    {
+                        internalType: 'uint256',
+                        name: 'price',
+                        type: 'uint256',
+                    },
+                    {
+                        internalType: 'bool',
+                        name: 'sold',
+                        type: 'bool',
+                    },
+                ],
+                internalType: 'struct NFTMarketplace.MarketItem[]',
+                name: '',
+                type: 'tuple[]',
+            },
+        ],
+        stateMutability: 'view',
+        type: 'function',
+    },
+    {
         inputs: [],
         name: 'fetchMarketItems',
         outputs: [

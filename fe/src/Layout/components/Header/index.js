@@ -17,7 +17,7 @@ export default function Header() {
     const setState = (data = {}) => {
         _setState((prevState) => ({ ...prevState, ...data }));
     };
-    const walletAddress = useSelector((state) => state.account.info);
+    let walletAddress = useSelector((state) => state.account.info);
     const searchRef = useRef();
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -28,7 +28,7 @@ export default function Header() {
         setState({ input: e.target.value });
     };
     const connectWallet = () => {
-        dispatch(fetchConnect(walletAddress));
+        dispatch(fetchConnect());
     };
 
     return (

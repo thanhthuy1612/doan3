@@ -13,6 +13,7 @@ const initialState = {
     items: [],
     myNFT: [],
     itemsListed: [],
+    itemsSeller: [],
 };
 
 const getERC = async () => {
@@ -81,11 +82,18 @@ export const fetchItemsListed = createAsyncThunk('fetchItemsListed', async () =>
     return items;
 });
 
+export const fetchItemsSeller = createAsyncThunk('fetchItemsSeller', async (address) => {
+    const { contract, erc721 } = await getERC();
+    const data = await erc721.fetchItemsSeller(address);
+    const items = await getItems(data, contract);
+    return items;
+});
+
 export const fetchConnect = createAsyncThunk('wallet', async (wallet, thunkAPI) => {
     const reconnect = async ({ provider }) => {
         const web3Provider = new ethers.providers.Web3Provider(provider);
         const signer = web3Provider.getSigner();
-        if (wallet !== undefined) {
+        if (thunkAPI.getState().account.info !== undefined) {
             const address = await signer.getAddress();
             const result = await checkAccount(address);
             thunkAPI.dispatch(setAccount(result[0]));
@@ -125,7 +133,7 @@ export const account = createSlice({
         },
     },
     extraReducers: (builder) => {
-        builder.addCase(fetchConnect.pending, (state, action) => {});
+        builder.addCase(fetchConnect.fulfilled, (state, action) => {});
         builder.addCase(fetchMarketItem.fulfilled, (state, actions) => {
             state.items = actions.payload;
         });
@@ -134,6 +142,9 @@ export const account = createSlice({
         });
         builder.addCase(fetchItemsListed.fulfilled, (state, actions) => {
             state.itemsListed = actions.payload;
+        });
+        builder.addCase(fetchItemsSeller.fulfilled, (state, actions) => {
+            state.itemsSeller = actions.payload;
         });
     },
 });

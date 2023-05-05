@@ -6,7 +6,12 @@ import styles from './Personal.module.scss';
 import Form from '../Form';
 export default function Personal() {
     const [collapse, setCollapse] = useState(false);
+    const [load, setLoad] = useState(false);
     const handleCreate = () => {
+        setCollapse(!collapse);
+    };
+    const onSubmit = () => {
+        setLoad(!load);
         setCollapse(!collapse);
     };
     return (
@@ -19,8 +24,8 @@ export default function Personal() {
                     icon={collapse ? faMinusCircle : faPlusCircle}
                 />
             </div>
-            {collapse ? <Form /> : <></>}
-            <Post />
+            {collapse ? <Form onSubmit={onSubmit} /> : <></>}
+            <Post load={load} />
         </div>
     );
 }

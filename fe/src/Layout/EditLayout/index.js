@@ -5,7 +5,7 @@ import styles from './EditLayout.module.scss';
 import { faMoneyBill, faRing, faShield, faTable, faTag, faUser } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 export default function EditLayout({ children }) {
-    const walletAddress = useSelector((state) => state.account.info);
+    let walletAddress = useSelector((state) => state.account.info);
     const menu = {
         title: 'SETTINGS',
         data: [

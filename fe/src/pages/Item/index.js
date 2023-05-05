@@ -10,7 +10,7 @@ import { createMarketSale } from '~/redux';
 
 export default function Item() {
     const [seller, setSeller] = useState();
-    const item = useSelector((state) => state.account.item);
+    let item = useSelector((state) => state.account.item);
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const handleBack = () => {
@@ -27,7 +27,6 @@ export default function Item() {
         navigate(`/account/seller/${seller._id}`);
     };
     const handleBuy = () => {
-        console.log(item, 'item');
         dispatch(createMarketSale(item));
         navigate('/');
     };

@@ -15,7 +15,7 @@ export default function Seller() {
     const param = useParams();
     const [seller, setSeller] = useState();
     const dispatch = useDispatch();
-    const items = useSelector((state) => state.account.items);
+    let items = useSelector((state) => state.account.items);
     const navigate = useNavigate();
     useEffect(() => {
         const fetch = async () => {

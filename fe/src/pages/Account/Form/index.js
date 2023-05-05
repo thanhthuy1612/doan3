@@ -8,7 +8,7 @@ import styles from './Form.module.scss';
 import { postPicture } from '~/api/picture';
 const client = create('http://14.225.254.58/api/v0');
 
-export default function Form() {
+export default function Form({ onSubmit }) {
     const [inputs, setInputs] = useState({ fileImg: null });
     const handleChange = async (event) => {
         const name = event.target.name;
@@ -33,6 +33,7 @@ export default function Form() {
         event.preventDefault();
         postPicture(params.id, { ...inputs });
         setInputs({ fileImg: null });
+        onSubmit();
     };
     return (
         <form onSubmit={handleSubmit} className={styles.form}>

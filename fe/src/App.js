@@ -5,7 +5,7 @@ import DefaultLayout from './Layout/DefaultLayout';
 import { useSelector } from 'react-redux';
 
 export default function App() {
-    const info = useSelector((state) => state.account.info);
+    let info = useSelector((state) => state.account.info);
     const routes = () => {
         return info ? [...publicRoutes, ...privateRoutes] : publicRoutes;
     };
