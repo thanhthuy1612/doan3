@@ -6,7 +6,8 @@ const path = url.login;
 export const getToken = async (sign) => {
     try {
         const res = await post(path, { sign: sign });
-        return { ...res.data.data, ...res.data.tokens };
+        localStorage.setItem('token', res.data.tokens.accessToken);
+        return { ...res.data.data };
     } catch (err) {
         console.log(err);
     }

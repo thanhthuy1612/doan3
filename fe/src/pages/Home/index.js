@@ -6,6 +6,7 @@ import Slide from './Slide';
 import Drop from './Drops';
 import styles from './Home.module.scss';
 import './Home.css';
+import Loading from '~/Layout/components/Loading';
 
 export default function Home() {
     const items = [
@@ -48,6 +49,7 @@ export default function Home() {
                 </Fade>
             </div>
             <Drop />
+            <Loading />
         </div>
     );
 }

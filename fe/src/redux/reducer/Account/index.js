@@ -89,6 +89,27 @@ export const fetchItemsSeller = createAsyncThunk('fetchItemsSeller', async (addr
     return items;
 });
 
+export const fetchReload = createAsyncThunk('reload', async (wallet, thunkAPI) => {
+    const reload = async ({ provider }) => {
+        const web3Provider = new ethers.providers.Web3Provider(provider);
+        const signer = web3Provider.getSigner();
+        const address = await signer.getAddress();
+        if (address) {
+            const result = await checkAccount(address);
+            thunkAPI.dispatch(setAccount(result[0]));
+        }
+    };
+    try {
+        let provider = window.ethereum;
+        await provider.request({
+            method: 'eth_requestAccounts',
+        });
+        await reload({ provider });
+    } catch (err) {
+        console.log(err);
+    }
+});
+
 export const fetchConnect = createAsyncThunk('wallet', async (wallet, thunkAPI) => {
     const reconnect = async ({ provider }) => {
         const web3Provider = new ethers.providers.Web3Provider(provider);
@@ -133,6 +154,7 @@ export const account = createSlice({
         },
     },
     extraReducers: (builder) => {
+        builder.addCase(fetchReload.fulfilled, (state, action) => {});
         builder.addCase(fetchConnect.fulfilled, (state, action) => {});
         builder.addCase(fetchMarketItem.fulfilled, (state, actions) => {
             state.items = actions.payload;

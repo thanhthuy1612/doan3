@@ -10,14 +10,31 @@ import { Account } from '~/constants/Account';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import MenuAccount from './MenuAccount';
-import { fetchConnect } from '~/redux';
+import { fetchConnect, fetchReload } from '~/redux';
 
 export default function Header() {
     const [state, _setState] = useState({});
     const setState = (data = {}) => {
         _setState((prevState) => ({ ...prevState, ...data }));
     };
+    window.onload = (event) => {
+        isConnected();
+    };
+
+    async function isConnected() {
+        let provider = window.ethereum;
+        const accounts = await provider.request({
+            method: 'eth_accounts',
+        });
+        if (accounts.length && localStorage.getItem('token')) {
+            dispatch(fetchReload());
+        } else {
+            navigate('/');
+            console.log('Metamask is not connected');
+        }
+    }
     let walletAddress = useSelector((state) => state.account.info);
+    console.log(walletAddress, 'result');
     const searchRef = useRef();
     const dispatch = useDispatch();
     const navigate = useNavigate();

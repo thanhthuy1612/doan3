@@ -31,8 +31,8 @@ export default function Form({ onSubmit }) {
     };
     const handleSubmit = async (event) => {
         event.preventDefault();
-        postPicture(params.id, { ...inputs });
         setInputs({ fileImg: null });
+        await postPicture(params.id, { ...inputs });
         onSubmit();
     };
     return (
