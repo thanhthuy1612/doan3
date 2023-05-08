@@ -14,6 +14,8 @@ const initialState = {
     myNFT: [],
     itemsListed: [],
     itemsSeller: [],
+    loading: false,
+    cart: [],
 };
 
 const getERC = async () => {
@@ -50,7 +52,9 @@ const getItems = async (data, contract) => {
 export const createMarketSale = createAsyncThunk('createMarketSale', async (item, thunkAPI) => {
     const { erc721 } = await getERC();
     const price = ethers.utils.parseUnits(item.price, 'ether');
-    await erc721.createMarketSale(item.tokenId, { value: price });
+    let result = await erc721.createMarketSale(item.tokenId, { value: price });
+    thunkAPI.dispatch(setLoading(true));
+    await result.wait();
 });
 
 export const resellToken = createAsyncThunk('createMarketSale', async (item, thunkAPI) => {
@@ -58,27 +62,35 @@ export const resellToken = createAsyncThunk('createMarketSale', async (item, thu
     const price = ethers.utils.parseUnits(item.price, 'ether');
     let listingPrice = await contract.getListingPrice();
     listingPrice = listingPrice.toString();
-    await erc721.resellToken(item.tokenId, price, { value: listingPrice });
+    let result = await erc721.resellToken(item.tokenId, price, { value: listingPrice });
+    thunkAPI.dispatch(setLoading(true));
+    await result.wait();
 });
 
-export const fetchMarketItem = createAsyncThunk('fetchMarketItem', async () => {
+export const fetchMarketItem = createAsyncThunk('fetchMarketItem', async (item, thunkAPI) => {
+    thunkAPI.dispatch(setLoading(true));
     const { contract, erc721 } = await getERC();
     const data = await erc721.fetchMarketItems();
-    const items = getItems(data, contract);
+    const items = await getItems(data, contract);
+    thunkAPI.dispatch(setLoading(false));
     return items;
 });
 
-export const fetchMyNFTs = createAsyncThunk('fetchMyNFTs', async () => {
+export const fetchMyNFTs = createAsyncThunk('fetchMyNFTs', async (item, thunkAPI) => {
+    thunkAPI.dispatch(setLoading(true));
     const { contract, erc721 } = await getERC();
     const data = await erc721.fetchMyNFTs();
     const items = await getItems(data, contract);
+    thunkAPI.dispatch(setLoading(false));
     return items;
 });
 
-export const fetchItemsListed = createAsyncThunk('fetchItemsListed', async () => {
+export const fetchItemsListed = createAsyncThunk('fetchItemsListed', async (item, thunkAPI) => {
+    thunkAPI.dispatch(setLoading(true));
     const { contract, erc721 } = await getERC();
     const data = await erc721.fetchItemsListed();
     const items = await getItems(data, contract);
+    thunkAPI.dispatch(setLoading(false));
     return items;
 });
 
@@ -89,39 +101,24 @@ export const fetchItemsSeller = createAsyncThunk('fetchItemsSeller', async (addr
     return items;
 });
 
-export const fetchReload = createAsyncThunk('reload', async (wallet, thunkAPI) => {
-    const reload = async ({ provider }) => {
-        const web3Provider = new ethers.providers.Web3Provider(provider);
-        const signer = web3Provider.getSigner();
-        const address = await signer.getAddress();
-        if (address) {
-            const result = await checkAccount(address);
-            thunkAPI.dispatch(setAccount(result[0]));
-        }
-    };
-    try {
-        let provider = window.ethereum;
-        await provider.request({
-            method: 'eth_requestAccounts',
-        });
-        await reload({ provider });
-    } catch (err) {
-        console.log(err);
-    }
-});
-
-export const fetchConnect = createAsyncThunk('wallet', async (wallet, thunkAPI) => {
+export const fetchConnect = createAsyncThunk('wallet', async (reload, thunkAPI) => {
     const reconnect = async ({ provider }) => {
         const web3Provider = new ethers.providers.Web3Provider(provider);
         const signer = web3Provider.getSigner();
-        if (thunkAPI.getState().account.info !== undefined) {
+        if (reload) {
             const address = await signer.getAddress();
             const result = await checkAccount(address);
             thunkAPI.dispatch(setAccount(result[0]));
         } else {
-            const sign = await signer.signMessage('Login');
-            const result = await getToken(sign);
-            thunkAPI.dispatch(setAccount(result));
+            if (thunkAPI.getState().account.info !== undefined) {
+                const address = await signer.getAddress();
+                const result = await checkAccount(address);
+                thunkAPI.dispatch(setAccount(result[0]));
+            } else {
+                const sign = await signer.signMessage('Login');
+                const result = await getToken(sign);
+                thunkAPI.dispatch(setAccount(result));
+            }
         }
     };
     try {
@@ -152,9 +149,11 @@ export const account = createSlice({
         setItem: (state, action) => {
             state.item = action.payload;
         },
+        setLoading: (state, action) => {
+            state.loading = action.payload;
+        },
     },
     extraReducers: (builder) => {
-        builder.addCase(fetchReload.fulfilled, (state, action) => {});
         builder.addCase(fetchConnect.fulfilled, (state, action) => {});
         builder.addCase(fetchMarketItem.fulfilled, (state, actions) => {
             state.items = actions.payload;
@@ -168,9 +167,12 @@ export const account = createSlice({
         builder.addCase(fetchItemsSeller.fulfilled, (state, actions) => {
             state.itemsSeller = actions.payload;
         });
+        builder.addCase(createMarketSale.fulfilled || resellToken.fulfilled, (state, actions) => {
+            state.loading = false;
+        });
     },
 });
 const accountReducer = account.reducer;
 
-export const { setAccount, setItem } = account.actions;
+export const { setAccount, setItem, setLoading } = account.actions;
 export default accountReducer;

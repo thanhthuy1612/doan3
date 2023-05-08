@@ -6,10 +6,12 @@ import { useParams } from 'react-router-dom';
 import images from '~/assets/images';
 import styles from './Form.module.scss';
 import { postPicture } from '~/api/picture';
+import Loading from '~/Layout/components/Loading';
 const client = create('http://14.225.254.58/api/v0');
 
 export default function Form({ onSubmit }) {
     const [inputs, setInputs] = useState({ fileImg: null });
+    const [loading, setLoading] = useState(false);
     const handleChange = async (event) => {
         const name = event.target.name;
         const value = event.target.value;
@@ -31,8 +33,10 @@ export default function Form({ onSubmit }) {
     };
     const handleSubmit = async (event) => {
         event.preventDefault();
-        setInputs({ fileImg: null });
+        setLoading(true);
         await postPicture(params.id, { ...inputs });
+        setLoading(false);
+        setInputs({ fileImg: null });
         onSubmit();
     };
     return (
@@ -79,12 +83,13 @@ export default function Form({ onSubmit }) {
                     />
                 </label>
                 <label className={styles.labelSubmit}>
-                    <input
-                        disabled={!inputs.img || !inputs.title || !inputs.price}
+                    <button
+                        disabled={!inputs.img || !inputs.title || !inputs.price || loading}
                         className={styles.submit}
                         type="submit"
-                        value="Save"
-                    />
+                    >
+                        {loading ? <Loading type="small" /> : <>Save</>}
+                    </button>
                 </label>
             </div>
         </form>

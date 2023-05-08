@@ -26,14 +26,15 @@
     }
 
     .submit {
+        height: 40px;
+        border-radius: 10px;
         font-size: 15px;
         display: flex;
         align-items: center;
         justify-content: center;
+        border: 1px solid var(--default-gray);
         cursor: pointer;
         width: 100px;
-        margin: 20px 0px;
-        padding: 17px 24px;
         background-color: var(--default-choose);
 
         &:hover {

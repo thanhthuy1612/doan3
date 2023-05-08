@@ -27,6 +27,9 @@ export default function Account() {
     useEffect(() => {
         fetch();
     }, []);
+    const handleShare = async () => {
+        await navigator.clipboard.writeText('http://localhost:3000/account/seller/' + params.id);
+    };
     return (
         <div className={styles.wrapper}>
             <div className={styles.header}>
@@ -67,7 +70,7 @@ export default function Account() {
                     <Tippy
                         interactive
                         render={(attrs) => (
-                            <div className={styles.content} tabIndex="-1" {...attrs}>
+                            <div className={styles.content} tabIndex="-1" {...attrs} onClick={handleShare}>
                                 Share
                             </div>
                         )}

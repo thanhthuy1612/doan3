@@ -5,12 +5,12 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchItemsListed, fetchMyNFTs, setItem } from '~/redux';
 import { useNavigate } from 'react-router-dom';
+import Loading from '~/Layout/components/Loading';
 export default function Post({ load }) {
     const [select, setSelect] = useState(0);
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    let myNFT = useSelector((state) => state.account.myNFT);
-    let itemsListed = useSelector((state) => state.account.itemsListed);
+    let { myNFT, itemsListed, loading } = useSelector((state) => state.account);
     useEffect(() => {
         dispatch(fetchItemsListed());
         dispatch(fetchMyNFTs());
@@ -32,26 +32,46 @@ export default function Post({ load }) {
                 </TabList>
 
                 <TabPanel className={styles.tabPanel}>
-                    {myNFT.map((item, index) => (
-                        <ButtonCategory
-                            key={index}
-                            item={item}
-                            onClick={() => {
-                                handleClickMyNFT(item);
-                            }}
-                        />
-                    ))}
+                    {myNFT.length === 0 ? (
+                        loading ? (
+                            <div className={styles.loading}>
+                                <Loading />
+                            </div>
+                        ) : (
+                            <p className={styles.title}>Don't have item.</p>
+                        )
+                    ) : (
+                        myNFT.map((item, index) => (
+                            <ButtonCategory
+                                key={index}
+                                item={item}
+                                onClick={() => {
+                                    handleClickMyNFT(item);
+                                }}
+                            />
+                        ))
+                    )}
                 </TabPanel>
                 <TabPanel className={styles.tabPanel}>
-                    {itemsListed.map((item, index) => (
-                        <ButtonCategory
-                            key={index}
-                            item={item}
-                            onClick={() => {
-                                handleClickItemsList(item);
-                            }}
-                        />
-                    ))}
+                    {itemsListed.length === 0 ? (
+                        loading ? (
+                            <div className={styles.loading}>
+                                <Loading />
+                            </div>
+                        ) : (
+                            <p className={styles.title}>Don't have item.</p>
+                        )
+                    ) : (
+                        itemsListed.map((item, index) => (
+                            <ButtonCategory
+                                key={index}
+                                item={item}
+                                onClick={() => {
+                                    handleClickItemsList(item);
+                                }}
+                            />
+                        ))
+                    )}
                 </TabPanel>
             </Tabs>
         </div>

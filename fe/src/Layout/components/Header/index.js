@@ -3,14 +3,14 @@ import images from '~/assets/images';
 import Tippy from '@tippyjs/react/headless';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCartShopping, faMagnifyingGlass, faWallet } from '@fortawesome/free-solid-svg-icons';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Wrapper as PopperWrapper } from './Popper';
 import SearchList from './SearchList';
 import { Account } from '~/constants/Account';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import MenuAccount from './MenuAccount';
-import { fetchConnect, fetchReload } from '~/redux';
+import { fetchConnect, setLoading } from '~/redux';
 
 export default function Header() {
     const [state, _setState] = useState({});
@@ -27,14 +27,13 @@ export default function Header() {
             method: 'eth_accounts',
         });
         if (accounts.length && localStorage.getItem('token')) {
-            dispatch(fetchReload());
+            dispatch(fetchConnect(true));
         } else {
             navigate('/');
             console.log('Metamask is not connected');
         }
     }
     let walletAddress = useSelector((state) => state.account.info);
-    console.log(walletAddress, 'result');
     const searchRef = useRef();
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -44,8 +43,16 @@ export default function Header() {
     const handleChange = (e) => {
         setState({ input: e.target.value });
     };
-    const connectWallet = () => {
-        dispatch(fetchConnect());
+    useEffect(() => {
+        setState({ copy: false });
+    }, [walletAddress]);
+    const connectWallet = async () => {
+        if (walletAddress === undefined) {
+            dispatch(fetchConnect(false));
+        } else {
+            await navigator.clipboard.writeText(walletAddress.wallet);
+            setState({ copy: true });
+        }
     };
 
     return (
@@ -94,6 +101,9 @@ export default function Header() {
                             ) : (
                                 <div className={styles.text}>Connect wallet</div>
                             )}
+                            <span className={styles.content}>
+                                {walletAddress ? (state.copy ? 'Copied' : 'Copy') : ''}
+                            </span>
                         </div>
                         <MenuAccount walletAddress={walletAddress} />
                     </div>

@@ -45,3 +45,16 @@
         flex-wrap: wrap;
     }
 }
+
+.loading {
+    margin-top: 20px;
+    width: 100%;
+    display: flex;
+    justify-content: center !important;
+}
+
+.title {
+    font-size: 20px;
+    align-items: center;
+    width: 100%;
+}

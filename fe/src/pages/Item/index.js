@@ -6,11 +6,12 @@ import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { checkAccount } from '~/api/account';
 import { MyAccount } from '~/constants/MyAccount';
-import { createMarketSale } from '~/redux';
+import { createMarketSale, setLoading } from '~/redux';
+import Loading from '~/Layout/components/Loading';
 
 export default function Item() {
     const [seller, setSeller] = useState();
-    let item = useSelector((state) => state.account.item);
+    let { item, loading } = useSelector((state) => state.account);
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const handleBack = () => {
@@ -22,13 +23,16 @@ export default function Item() {
             setSeller(result[0]);
         };
         fetch();
+        dispatch(setLoading(false));
     }, []);
     const handleClick = () => {
         navigate(`/account/seller/${seller._id}`);
     };
-    const handleBuy = () => {
-        dispatch(createMarketSale(item));
-        navigate('/');
+    const handleBuy = async () => {
+        if (!loading) {
+            await dispatch(createMarketSale(item));
+            navigate('/');
+        }
     };
     return (
         <div className={styles.wrapper}>
@@ -58,8 +62,12 @@ export default function Item() {
                             <p className={styles.priceText}>{item?.price} ETH</p>
                         </div>
                         <div className={styles.button}>
-                            <button className={styles.buttonBuy} onClick={handleBuy}>
-                                BUY NOW
+                            <button
+                                disabled={loading}
+                                className={!loading ? styles.buttonBuy : styles.buttonBuyDisable}
+                                onClick={handleBuy}
+                            >
+                                {loading ? <Loading /> : <span>BUY NOW</span>}
                             </button>
                             <FontAwesomeIcon className={styles.buttonIcon} icon={faShoppingCart} />
                         </div>

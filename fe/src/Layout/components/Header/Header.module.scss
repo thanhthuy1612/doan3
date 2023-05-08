@@ -117,7 +117,11 @@
         border-top-left-radius: 10px;
         &:hover {
             box-shadow: rgba(0, 0, 0, 0.1) 0px 5px 10px;
+            .content {
+                display: block !important;
+            }
         }
+        position: relative;
     }
     .iconWallet {
         width: 16px;
@@ -146,4 +150,15 @@
 
 .wallet * {
     cursor: pointer;
+}
+
+.content {
+    background-color: white;
+    padding: 5px 10px;
+    border-radius: 15px;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 5px 10px;
+    position: absolute;
+    top: 50px;
+    left: 54px;
+    display: none;
 }

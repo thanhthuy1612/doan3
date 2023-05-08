@@ -12,14 +12,14 @@ import ButtonCategory from '../Home/ButtonCategory';
 
 export default function Seller() {
     const defaultAccount = MyAccount;
-    const param = useParams();
+    const params = useParams();
     const [seller, setSeller] = useState();
     const dispatch = useDispatch();
     let items = useSelector((state) => state.account.items);
     const navigate = useNavigate();
     useEffect(() => {
         const fetch = async () => {
-            const result = await getAccount(param.id);
+            const result = await getAccount(params.id);
             setSeller(result);
             dispatch(fetchMarketItem());
         };
@@ -28,6 +28,9 @@ export default function Seller() {
     const handleClick = (item) => {
         dispatch(setItem(item));
         navigate(`/item/${item.tokenId}`);
+    };
+    const handleShare = async () => {
+        await navigator.clipboard.writeText('http://localhost:3000/account/seller/' + params.id);
     };
     return (
         <div className={styles.wrapper}>
@@ -60,7 +63,7 @@ export default function Seller() {
                             </div>
                         )}
                     >
-                        <button className={styles.buttonIcon}>
+                        <button className={styles.buttonIcon} onClick={handleShare}>
                             <FontAwesomeIcon className={styles.icon} icon={faShare} />
                         </button>
                     </Tippy>

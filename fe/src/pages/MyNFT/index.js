@@ -6,12 +6,13 @@ import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { checkAccount } from '~/api/account';
 import { MyAccount } from '~/constants/MyAccount';
-import { resellToken } from '~/redux';
+import { resellToken, setLoading } from '~/redux';
+import Loading from '~/Layout/components/Loading';
 
 export default function MyNFT() {
     const [seller, setSeller] = useState();
     const [resell, setResell] = useState();
-    let item = useSelector((state) => state.account.item);
+    let { item, loading } = useSelector((state) => state.account);
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const handleBack = () => {
@@ -23,13 +24,16 @@ export default function MyNFT() {
             setSeller(result[0]);
         };
         fetch();
+        dispatch(setLoading(false));
     }, []);
     const handleClick = () => {
         navigate(`/account/seller/${seller._id}`);
     };
-    const handleBuy = () => {
-        dispatch(resellToken({ ...item, price: resell || item.price }));
-        navigate('/');
+    const handleBuy = async () => {
+        if (!loading) {
+            await dispatch(resellToken({ ...item, price: resell || item.price }));
+            navigate('/');
+        }
     };
     const handleChange = (e) => {
         setResell(e.target.value);
@@ -64,8 +68,12 @@ export default function MyNFT() {
                             <input className={styles.input} onChange={handleChange} />
                         </div>
                         <div className={styles.button}>
-                            <button className={styles.buttonBuy} onClick={handleBuy}>
-                                RESELL
+                            <button
+                                disabled={loading}
+                                className={!loading ? styles.buttonBuy : styles.buttonBuyDisable}
+                                onClick={handleBuy}
+                            >
+                                {loading ? <Loading /> : <span>RESELL</span>}
                             </button>
                             <FontAwesomeIcon className={styles.buttonIcon} icon={faShoppingCart} />
                         </div>

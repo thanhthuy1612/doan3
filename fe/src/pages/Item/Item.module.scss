@@ -95,6 +95,9 @@
         border: 1px solid var(--default-gray);
     }
     .buttonBuy {
+        display: flex;
+        justify-content: center;
+        align-items: center;
         width: 550px;
         height: 70px;
         cursor: pointer;
@@ -103,6 +106,16 @@
         &:hover {
             box-shadow: rgba(0, 0, 0, 0.12) 0px 2px 10px;
         }
+    }
+    .buttonBuyDisable{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 550px;
+        height: 70px;
+        cursor: not-allowed;
+        border-top-left-radius: 15px;
+        border-bottom-left-radius: 15px;
     }
     .buttonIcon {
         width: 30px;

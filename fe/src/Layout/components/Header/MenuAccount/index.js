@@ -62,7 +62,7 @@ export default function MenuAccount({ walletAddress }) {
 
     const handleClick = async () => {
         if (!walletAddress?._id) {
-            dispatch(fetchConnect());
+            dispatch(fetchConnect(false));
         } else {
             navigate(`/account/${walletAddress?._id}`);
         }

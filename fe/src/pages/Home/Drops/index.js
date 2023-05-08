@@ -6,10 +6,10 @@ import styles from './Drops.module.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchMarketItem, setItem } from '~/redux';
 import { useNavigate } from 'react-router-dom';
+import Loading from '~/Layout/components/Loading';
 export default function Drop() {
     const [select, setSelect] = useState(0);
-    let items = useSelector((state) => state.account.items);
-    let info = useSelector((state) => state.account.info);
+    let { items, info, loading } = useSelector((state) => state.account);
     const dispatch = useDispatch();
     const navigate = useNavigate();
     var today = new Date();
@@ -34,7 +34,13 @@ export default function Drop() {
                 <TabPanel className={styles.tabPanel}>
                     {info ? (
                         items.filter((x) => x?.meta?.time === date).length === 0 ? (
-                            <p className={styles.title}>Don't have item.</p>
+                            loading ? (
+                                <div className={styles.loading}>
+                                    <Loading />
+                                </div>
+                            ) : (
+                                <p className={styles.title}>Don't have item.</p>
+                            )
                         ) : (
                             items
                                 .filter((x) => x?.meta?.time === date)
@@ -55,7 +61,13 @@ export default function Drop() {
                 <TabPanel className={styles.tabPanel}>
                     {info ? (
                         items.filter((x) => x?.meta?.time !== date).length === 0 ? (
-                            <p className={styles.title}>Don't have item.</p>
+                            loading ? (
+                                <div className={styles.loading}>
+                                    <Loading />
+                                </div>
+                            ) : (
+                                <p className={styles.title}>Don't have item.</p>
+                            )
                         ) : (
                             items
                                 .filter((x) => x?.meta?.time !== date)

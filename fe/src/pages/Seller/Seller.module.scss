@@ -7,7 +7,7 @@
 
         .banner {
             width: 100%;
-            height: 250px;
+            height: 300px;
         }
 
         .ava {
@@ -16,13 +16,13 @@
             height: 168px;
             border-radius: 50%;
             position: absolute;
-            top: 120px;
+            top: 175px;
             left: 50px;
         }
     }
 
     .profile {
-        margin-top: 30px;
+        margin-top: 35px;
         text-align: left;
         margin-left: 40px;
 
@@ -47,7 +47,6 @@
         padding: 10px;
         border-radius: 50%;
         cursor: pointer;
-        margin: 0 5px;
     }
     .buttonIcon {
         margin: 0 5px;
@@ -61,6 +60,7 @@
         box-shadow: rgba(0, 0, 0, 0.1) 5px 5px 10px;
     }
 }
+
 .body {
     margin-top: 10px;
     padding-top: 5px;

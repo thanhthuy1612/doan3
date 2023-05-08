@@ -94,6 +94,9 @@
         border: 1px solid var(--default-gray);
     }
     .buttonBuy {
+        display: flex;
+        justify-content: center;
+        align-items: center;
         width: 550px;
         height: 70px;
         cursor: pointer;
@@ -122,4 +125,15 @@
     border: 1px solid var(--default-gray);
     padding: 15px;
     margin-top: 5px;
+}
+
+.buttonBuyDisable {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 550px;
+    height: 70px;
+    cursor: not-allowed;
+    border-top-left-radius: 15px;
+    border-bottom-left-radius: 15px;
 }
