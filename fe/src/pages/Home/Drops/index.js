@@ -4,21 +4,19 @@ import 'react-tabs/style/react-tabs.css';
 import ButtonCategory from '../ButtonCategory';
 import styles from './Drops.module.scss';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchMarketItem, setItem } from '~/redux';
+import { fetchMarketItemsPast, fetchMarketItemsUpComing, setItem } from '~/redux';
 import { useNavigate } from 'react-router-dom';
 import Loading from '~/Layout/components/Loading';
 export default function Drop() {
     const [select, setSelect] = useState(0);
-    let { items, info, loading } = useSelector((state) => state.account);
+    let { upComing, past, info, loading } = useSelector((state) => state.account);
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    var today = new Date();
-    var date = today.getDate() + '-' + (today.getMonth() + 1) + '-' + today.getFullYear();
     useEffect(() => {
         if (info) {
-            dispatch(fetchMarketItem());
+            select === 0 ? dispatch(fetchMarketItemsUpComing()) : dispatch(fetchMarketItemsPast());
         }
-    }, [info]);
+    }, [info, select]);
     const handleClick = (item) => {
         dispatch(setItem(item));
         navigate(`/item/${item.tokenId}`);
@@ -33,7 +31,7 @@ export default function Drop() {
 
                 <TabPanel className={styles.tabPanel}>
                     {info ? (
-                        items.filter((x) => x?.meta?.time === date).length === 0 ? (
+                        upComing.length === 0 ? (
                             loading ? (
                                 <div className={styles.loading}>
                                     <Loading />
@@ -42,17 +40,15 @@ export default function Drop() {
                                 <p className={styles.title}>Don't have item.</p>
                             )
                         ) : (
-                            items
-                                .filter((x) => x?.meta?.time === date)
-                                .map((item, index) => (
-                                    <ButtonCategory
-                                        onClick={() => {
-                                            handleClick(item);
-                                        }}
-                                        key={index}
-                                        item={item}
-                                    />
-                                ))
+                            upComing.map((item, index) => (
+                                <ButtonCategory
+                                    onClick={() => {
+                                        handleClick(item);
+                                    }}
+                                    key={index}
+                                    item={item}
+                                />
+                            ))
                         )
                     ) : (
                         <p className={styles.title}>Please connect wallet</p>
@@ -60,7 +56,7 @@ export default function Drop() {
                 </TabPanel>
                 <TabPanel className={styles.tabPanel}>
                     {info ? (
-                        items.filter((x) => x?.meta?.time !== date).length === 0 ? (
+                        past.length === 0 ? (
                             loading ? (
                                 <div className={styles.loading}>
                                     <Loading />
@@ -69,17 +65,15 @@ export default function Drop() {
                                 <p className={styles.title}>Don't have item.</p>
                             )
                         ) : (
-                            items
-                                .filter((x) => x?.meta?.time !== date)
-                                .map((item, index) => (
-                                    <ButtonCategory
-                                        onClick={() => {
-                                            handleClick(item);
-                                        }}
-                                        key={index}
-                                        item={item}
-                                    />
-                                ))
+                            past.map((item, index) => (
+                                <ButtonCategory
+                                    onClick={() => {
+                                        handleClick(item);
+                                    }}
+                                    key={index}
+                                    item={item}
+                                />
+                            ))
                         )
                     ) : (
                         <p className={styles.title}>Please connect wallet</p>

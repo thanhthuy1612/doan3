@@ -138,6 +138,12 @@ export const abi = [
             },
             {
                 indexed: false,
+                internalType: 'uint256',
+                name: 'time',
+                type: 'uint256',
+            },
+            {
+                indexed: false,
                 internalType: 'bool',
                 name: 'sold',
                 type: 'bool',
@@ -340,6 +346,11 @@ export const abi = [
                         type: 'uint256',
                     },
                     {
+                        internalType: 'uint256',
+                        name: 'time',
+                        type: 'uint256',
+                    },
+                    {
                         internalType: 'bool',
                         name: 'sold',
                         type: 'bool',
@@ -386,6 +397,11 @@ export const abi = [
                         type: 'uint256',
                     },
                     {
+                        internalType: 'uint256',
+                        name: 'time',
+                        type: 'uint256',
+                    },
+                    {
                         internalType: 'bool',
                         name: 'sold',
                         type: 'bool',
@@ -426,6 +442,101 @@ export const abi = [
                         type: 'uint256',
                     },
                     {
+                        internalType: 'uint256',
+                        name: 'time',
+                        type: 'uint256',
+                    },
+                    {
+                        internalType: 'bool',
+                        name: 'sold',
+                        type: 'bool',
+                    },
+                ],
+                internalType: 'struct NFTMarketplace.MarketItem[]',
+                name: '',
+                type: 'tuple[]',
+            },
+        ],
+        stateMutability: 'view',
+        type: 'function',
+    },
+    {
+        inputs: [],
+        name: 'fetchMarketItemsPast',
+        outputs: [
+            {
+                components: [
+                    {
+                        internalType: 'uint256',
+                        name: 'tokenId',
+                        type: 'uint256',
+                    },
+                    {
+                        internalType: 'address payable',
+                        name: 'seller',
+                        type: 'address',
+                    },
+                    {
+                        internalType: 'address payable',
+                        name: 'owner',
+                        type: 'address',
+                    },
+                    {
+                        internalType: 'uint256',
+                        name: 'price',
+                        type: 'uint256',
+                    },
+                    {
+                        internalType: 'uint256',
+                        name: 'time',
+                        type: 'uint256',
+                    },
+                    {
+                        internalType: 'bool',
+                        name: 'sold',
+                        type: 'bool',
+                    },
+                ],
+                internalType: 'struct NFTMarketplace.MarketItem[]',
+                name: '',
+                type: 'tuple[]',
+            },
+        ],
+        stateMutability: 'view',
+        type: 'function',
+    },
+    {
+        inputs: [],
+        name: 'fetchMarketItemsUpComing',
+        outputs: [
+            {
+                components: [
+                    {
+                        internalType: 'uint256',
+                        name: 'tokenId',
+                        type: 'uint256',
+                    },
+                    {
+                        internalType: 'address payable',
+                        name: 'seller',
+                        type: 'address',
+                    },
+                    {
+                        internalType: 'address payable',
+                        name: 'owner',
+                        type: 'address',
+                    },
+                    {
+                        internalType: 'uint256',
+                        name: 'price',
+                        type: 'uint256',
+                    },
+                    {
+                        internalType: 'uint256',
+                        name: 'time',
+                        type: 'uint256',
+                    },
+                    {
                         internalType: 'bool',
                         name: 'sold',
                         type: 'bool',
@@ -463,6 +574,11 @@ export const abi = [
                     {
                         internalType: 'uint256',
                         name: 'price',
+                        type: 'uint256',
+                    },
+                    {
+                        internalType: 'uint256',
+                        name: 'time',
                         type: 'uint256',
                     },
                     {

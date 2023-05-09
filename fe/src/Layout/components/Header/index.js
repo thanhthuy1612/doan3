@@ -30,7 +30,6 @@ export default function Header() {
             dispatch(fetchConnect(true));
         } else {
             navigate('/');
-            console.log('Metamask is not connected');
         }
     }
     let walletAddress = useSelector((state) => state.account.info);
@@ -101,9 +100,11 @@ export default function Header() {
                             ) : (
                                 <div className={styles.text}>Connect wallet</div>
                             )}
-                            <span className={styles.content}>
-                                {walletAddress ? (state.copy ? 'Copied' : 'Copy') : ''}
-                            </span>
+                            {walletAddress ? (
+                                <span className={styles.content}>{state.copy ? 'Copied' : 'Copy'}</span>
+                            ) : (
+                                <></>
+                            )}
                         </div>
                         <MenuAccount walletAddress={walletAddress} />
                     </div>

@@ -16,6 +16,8 @@ const initialState = {
     itemsSeller: [],
     loading: false,
     cart: [],
+    upComing: [],
+    past: [],
 };
 
 const getERC = async () => {
@@ -35,12 +37,14 @@ const getItems = async (data, contract) => {
         data.map(async (i) => {
             let tokenUri = await contract.tokenURI(i.tokenId);
             const meta = await getItem(tokenUri);
+            let time = new Date(i.time.toNumber());
             let price = ethers.utils.formatUnits(i.price.toString(), 'ether');
             let item = {
                 tokenId: i.tokenId.toNumber(),
                 seller: i.seller,
                 owner: i.owner,
                 price,
+                time,
                 meta,
             };
             return item;
@@ -71,6 +75,24 @@ export const fetchMarketItem = createAsyncThunk('fetchMarketItem', async (item, 
     thunkAPI.dispatch(setLoading(true));
     const { contract, erc721 } = await getERC();
     const data = await erc721.fetchMarketItems();
+    const items = await getItems(data, contract);
+    thunkAPI.dispatch(setLoading(false));
+    return items;
+});
+
+export const fetchMarketItemsUpComing = createAsyncThunk('fetchMarketItemsUpComing', async (item, thunkAPI) => {
+    thunkAPI.dispatch(setLoading(true));
+    const { contract, erc721 } = await getERC();
+    const data = await erc721.fetchMarketItemsUpComing();
+    const items = await getItems(data, contract);
+    thunkAPI.dispatch(setLoading(false));
+    return items;
+});
+
+export const fetchMarketItemsPast = createAsyncThunk('fetchMarketItemsPast', async (item, thunkAPI) => {
+    thunkAPI.dispatch(setLoading(true));
+    const { contract, erc721 } = await getERC();
+    const data = await erc721.fetchMarketItemsPast();
     const items = await getItems(data, contract);
     thunkAPI.dispatch(setLoading(false));
     return items;
@@ -166,6 +188,12 @@ export const account = createSlice({
         });
         builder.addCase(fetchItemsSeller.fulfilled, (state, actions) => {
             state.itemsSeller = actions.payload;
+        });
+        builder.addCase(fetchMarketItemsUpComing.fulfilled, (state, actions) => {
+            state.upComing = actions.payload;
+        });
+        builder.addCase(fetchMarketItemsPast.fulfilled, (state, actions) => {
+            state.past = actions.payload;
         });
         builder.addCase(createMarketSale.fulfilled || resellToken.fulfilled, (state, actions) => {
             state.loading = false;

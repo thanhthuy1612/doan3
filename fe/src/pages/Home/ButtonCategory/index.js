@@ -17,11 +17,11 @@ export default function ButtonCategory({ item, ...passProps }) {
                 <div className={styles.content}>
                     <div className={styles.time}>
                         <span className={styles.text}>STARTS</span>
-                        <span className={styles.item}>{item.meta.time}</span>
+                        <span className={styles.item}>{item.time}</span>
                     </div>
                     <div className={styles.price}>
                         <span className={styles.text}>PRICE</span>
-                        <span className={styles.item}>{item.price}</span>
+                        <span className={styles.item}>{item.price} ETH</span>
                     </div>
                 </div>
             </div>

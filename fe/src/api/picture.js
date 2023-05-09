@@ -3,15 +3,10 @@ import { create } from 'ipfs-http-client';
 import { abi } from '~/redux/reducer/Account/abi';
 import { addressContract } from '~/redux/reducer/Account/addressContract';
 
-const { get } = require('~/utils/api');
-//const { url } = require('./url');
-
-//const path = url.picture;
+const { getIPFS } = require('~/utils/api');
 const client = create('http://14.225.254.58/api/v0');
 const uploadToIPFS = async (inputs = {}) => {
-    var today = new Date();
-    var date = today.getDate() + '-' + (today.getMonth() + 1) + '-' + today.getFullYear();
-    const data = JSON.stringify({ ...inputs, time: date });
+    const data = JSON.stringify({ ...inputs });
     try {
         const added = await client.add(data);
         const url = `https://ipfs.io/ipfs/${added.path}`;
@@ -44,7 +39,7 @@ export const postPicture = async (id, option = {}) => {
 
 export const getItem = async (url) => {
     try {
-        const res = await get(url, { params: {} });
+        const res = await getIPFS(url, { params: {} });
         return res;
     } catch (err) {
         console.log(err);

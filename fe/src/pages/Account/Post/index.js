@@ -12,9 +12,8 @@ export default function Post({ load }) {
     const navigate = useNavigate();
     let { myNFT, itemsListed, loading } = useSelector((state) => state.account);
     useEffect(() => {
-        dispatch(fetchItemsListed());
-        dispatch(fetchMyNFTs());
-    }, [load]);
+        select === 1 ? dispatch(fetchItemsListed()) : dispatch(fetchMyNFTs());
+    }, [select]);
     const handleClickItemsList = (item) => {
         dispatch(setItem(item));
         navigate(`/item/${item.tokenId}`);
