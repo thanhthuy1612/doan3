@@ -8,6 +8,8 @@ import Item from '~/pages/Item';
 import Seller from '~/pages/Seller';
 import MyNFT from '~/pages/MyNFT';
 import Transfer from '~/pages/Transfer';
+import Create from '~/pages/Create';
+import Collection from '~/pages/Collection';
 
 const publicRoutes = [{ path: '/', component: Home }];
 
@@ -25,6 +27,8 @@ const privateRoutes = [
     { path: '/account/seller/:id', component: Seller },
     { path: '/myNFT/:id', component: MyNFT },
     { path: '/transfer/:id', component: Transfer },
+    { path: '/create/:id', component: Create },
+    { path: '/collection/:id', component: Collection },
 ];
 
 export { publicRoutes, privateRoutes };

@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchItemsListed, fetchMyNFTs, setItem } from '~/redux';
 import { useNavigate } from 'react-router-dom';
 import Loading from '~/Layout/components/Loading';
+import { Pagination } from 'antd';
 export default function Post({ load }) {
     const [select, setSelect] = useState(0);
     const dispatch = useDispatch();
@@ -13,7 +14,7 @@ export default function Post({ load }) {
     let { myNFT, itemsListed, loading } = useSelector((state) => state.account);
     useEffect(() => {
         select === 1 ? dispatch(fetchItemsListed()) : dispatch(fetchMyNFTs());
-    }, [select]);
+    }, [select, load]);
     const handleClickItemsList = (item) => {
         dispatch(setItem(item));
         navigate(`/item/${item.tokenId}`);
@@ -40,16 +41,19 @@ export default function Post({ load }) {
                             <p className={styles.title}>Don't have item.</p>
                         )
                     ) : (
-                        myNFT.map((item, index) => (
-                            <ButtonCategory
-                                type="sell"
-                                key={index}
-                                item={item}
-                                onClick={() => {
-                                    handleClickMyNFT(item);
-                                }}
-                            />
-                        ))
+                        <div className={styles.page}>
+                            {myNFT.map((item, index) => (
+                                <ButtonCategory
+                                    type="sell"
+                                    key={index}
+                                    item={item}
+                                    onClick={() => {
+                                        handleClickMyNFT(item);
+                                    }}
+                                />
+                            ))}
+                            <Pagination className={styles.pagination} showSizeChanger defaultCurrent={3} total={500} />
+                        </div>
                     )}
                 </TabPanel>
                 <TabPanel className={styles.tabPanel}>
@@ -62,15 +66,18 @@ export default function Post({ load }) {
                             <p className={styles.title}>Don't have item.</p>
                         )
                     ) : (
-                        itemsListed.map((item, index) => (
-                            <ButtonCategory
-                                key={index}
-                                item={item}
-                                onClick={() => {
-                                    handleClickItemsList(item);
-                                }}
-                            />
-                        ))
+                        <div className={styles.page}>
+                            {itemsListed.map((item, index) => (
+                                <ButtonCategory
+                                    key={index}
+                                    item={item}
+                                    onClick={() => {
+                                        handleClickItemsList(item);
+                                    }}
+                                />
+                            ))}
+                            <Pagination className={styles.pagination} showSizeChanger defaultCurrent={1} total={500} />
+                        </div>
                     )}
                 </TabPanel>
             </Tabs>

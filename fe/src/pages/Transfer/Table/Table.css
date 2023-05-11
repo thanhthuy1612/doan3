@@ -24,3 +24,17 @@
 :where(.css-dev-only-do-not-override-ed5zg0).ant-pagination .ant-pagination-item-active:hover {
     border-color: #4d4d4d;
 }
+:where(.css-dev-only-do-not-override-ed5zg0).ant-table-wrapper .ant-table-column-sorter-up.active,
+:where(.css-dev-only-do-not-override-ed5zg0).ant-table-wrapper .ant-table-column-sorter-down.active {
+    color: var(--text-color);
+}
+.content {
+    background-color: white;
+    color: var(--text-color);
+    padding: 3px 5px;
+    border-radius: 5px;
+    box-shadow: rgba(0, 0, 0, 0.1) 5px 5px 10px;
+}
+.button {
+    cursor: pointer;
+}

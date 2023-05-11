@@ -1,4 +1,5 @@
 .wrapper {
+    margin-top: 10px;
 }
 :where(.css-dev-only-do-not-override-ed5zg0).ant-tabs .ant-tabs-ink-bar {
     background: var(--text-color);
@@ -14,6 +15,12 @@
 }
 :where(.css-dev-only-do-not-override-ed5zg0).ant-tabs {
     color: #999999;
+}
+:where(.css-dev-only-do-not-override-ed5zg0).ant-tabs .ant-tabs-tab-btn:focus:not(:focus-visible),
+:where(.css-dev-only-do-not-override-ed5zg0).ant-tabs .ant-tabs-tab-remove:focus:not(:focus-visible),
+:where(.css-dev-only-do-not-override-ed5zg0).ant-tabs .ant-tabs-tab-btn:active,
+:where(.css-dev-only-do-not-override-ed5zg0).ant-tabs .ant-tabs-tab-remove:active {
+    color: var(--text-color);
 }
 .title {
     font-size: 20px;

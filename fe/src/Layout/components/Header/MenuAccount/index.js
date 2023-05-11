@@ -16,25 +16,24 @@ export default function MenuAccount({ walletAddress }) {
             to: `/account/${walletAddress?._id}`,
         },
         {
-            icon: <FontAwesomeIcon icon={faHeart} />,
-            title: 'Favorite',
-        },
-        {
             icon: <FontAwesomeIcon icon={faEye} />,
-            title: 'Watch List',
+            title: 'Transaction',
             to: `/transfer/${walletAddress?._id}`,
         },
         {
             icon: <FontAwesomeIcon icon={faTable} />,
             title: 'My Collection',
+            to: `/collection/${walletAddress?._id}`,
         },
         {
             icon: <FontAwesomeIcon icon={faPen} />,
             title: 'Create',
+            to: `/create/${walletAddress?._id}`,
         },
         {
             icon: <FontAwesomeIcon icon={faGear} />,
             title: 'Setting',
+            to: `/account/profile/${walletAddress?._id}`,
         },
         {
             icon: <FontAwesomeIcon icon={faEarthAsia} />,

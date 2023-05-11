@@ -1,13 +1,11 @@
 import { getIPFS } from '~/utils/api';
 import { baseURLTransfer } from './url';
-import { addressContract } from '~/redux/reducer/Account/addressContract';
 
-export const getTransfer = async (address, page, offset) => {
+export const getTransfer = async (address) => {
     try {
         const res = await getIPFS(
             baseURLTransfer +
-                '?module=account&action=txlist&contractaddress=' +
-                addressContract +
+                '?module=account&action=txlist' +
                 '&address=' +
                 address +
                 '&startblock=0&endblock=99999999' +

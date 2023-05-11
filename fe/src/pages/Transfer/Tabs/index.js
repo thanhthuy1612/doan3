@@ -19,7 +19,7 @@ export default function Tab() {
             children: <TableComponent type="resellToken" />,
         },
         {
-            label: <span className="title">Sold</span>,
+            label: <span className="title">Received</span>,
             key: 4,
             children: <TableComponent type="sold" />,
         },

@@ -1,9 +1,11 @@
-import { Table } from 'antd';
+import { Table, notification } from 'antd';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { getAccount } from '~/api/account';
 import { getTransfer } from '~/api/transfer';
 import './Table.css';
+import Tippy from '@tippyjs/react/headless';
+import { addressContract } from '~/redux/reducer/Account/addressContract';
 export default function TableComponent({ type }) {
     const columns = [
         {
@@ -11,9 +13,9 @@ export default function TableComponent({ type }) {
             dataIndex: 'hash',
             key: 'hash',
             render: (text) => (
-                <a href={`https://testnet.bscscan.com/tx/${text}`}>
+                <a className="hash" href={`https://testnet.bscscan.com/tx/${text}`}>
                     {text.substring(0, 6)}...
-                    {text.substring(50)}
+                    {text.substring(55)}
                 </a>
             ),
         },
@@ -27,7 +29,7 @@ export default function TableComponent({ type }) {
             dataIndex: 'timeStamp',
             key: 'timeStamp',
             defaultSortOrder: 'descend',
-            sorter: (a, b) => a.time - b.time,
+            sorter: (a, b) => a.timeStamp - b.timeStamp,
             render: (time) => <p>{getDate(time)}</p>,
         },
         {
@@ -35,10 +37,19 @@ export default function TableComponent({ type }) {
             dataIndex: 'from',
             key: 'from',
             render: (from) => (
-                <p>
-                    {from.substring(0, 6)}...
-                    {from.substring(38)}
-                </p>
+                <Tippy
+                    interactive
+                    render={(attrs) => (
+                        <div className="content" tabIndex="-1" {...attrs}>
+                            {from}
+                        </div>
+                    )}
+                >
+                    <p className="button" onClick={() => openNotification('topRight', from)}>
+                        {from.substring(0, 6)}...
+                        {from.substring(38)}
+                    </p>
+                </Tippy>
             ),
         },
         {
@@ -46,10 +57,19 @@ export default function TableComponent({ type }) {
             dataIndex: 'to',
             key: 'to',
             render: (to) => (
-                <p>
-                    {to.substring(0, 6)}...
-                    {to.substring(38)}
-                </p>
+                <Tippy
+                    interactive={true}
+                    render={(attrs) => (
+                        <div className="content" tabIndex="-1" {...attrs}>
+                            {to}
+                        </div>
+                    )}
+                >
+                    <p className="button" onClick={() => openNotification('topRight', to)}>
+                        {to.substring(0, 6)}...
+                        {to.substring(38)}
+                    </p>
+                </Tippy>
             ),
         },
         {
@@ -81,22 +101,38 @@ export default function TableComponent({ type }) {
     ];
 
     const [transfer, setTransfer] = useState();
+    const [api, contextHolder] = notification.useNotification();
     const params = useParams();
     useEffect(() => {
         const fetch = async () => {
             const account = await getAccount(params.id);
-            const result = await getTransfer(account.wallet);
+            let result = await getTransfer(account.wallet);
+            result.sort(function (a, b) {
+                return b.timeStamp - a.timeStamp;
+            });
             let item;
             switch (type) {
                 case 'resellToken':
-                    item = await result.filter((e) => e.functionName === 'resellToken(uint256 tokenId, uint256 price)');
+                    item = await result.filter(
+                        (e) =>
+                            e.functionName === 'resellToken(uint256 tokenId, uint256 price)' &&
+                            e.to === addressContract.toLowerCase(),
+                    );
                     setTransfer(item);
                     break;
                 case 'createMarketSale':
-                    item = await result.filter((e) => e.functionName === 'createMarketSale(uint256 itemId)');
+                    item = await result.filter(
+                        (e) =>
+                            e.functionName === 'createMarketSale(uint256 itemId)' &&
+                            e.to === addressContract.toLowerCase(),
+                    );
                     break;
                 case 'createToken':
-                    item = await result.filter((e) => e.functionName === 'createToken(string _name, uint256 _id)');
+                    item = await result.filter(
+                        (e) =>
+                            e.functionName === 'createToken(string _name, uint256 _id)' &&
+                            e.to === addressContract.toLowerCase(),
+                    );
                     break;
                 case 'sold':
                     item = await result.filter((e) => e.to === account.wallet.toLowerCase());
@@ -108,6 +144,14 @@ export default function TableComponent({ type }) {
         };
         fetch();
     }, []);
+    const openNotification = async (placement, items) => {
+        await navigator.clipboard.writeText(items);
+        api.success({
+            message: `COPY SUCCESS`,
+            description: items,
+            placement,
+        });
+    };
     const getDate = (date) => {
         let time = new Date(date * 1000);
         let yyyy = time.getFullYear();
@@ -124,13 +168,16 @@ export default function TableComponent({ type }) {
         return dd + '-' + mm + '-' + yyyy + ' ' + hours + ':' + minutes;
     };
     return (
-        <Table
-            columns={columns}
-            dataSource={transfer}
-            pagination={{
-                pageSize: 10,
-            }}
-            style={{ width: '100%' }}
-        />
+        <div>
+            {contextHolder}
+            <Table
+                columns={columns}
+                dataSource={transfer}
+                pagination={{
+                    pageSize: 10,
+                }}
+                style={{ width: '100%' }}
+            />
+        </div>
     );
 }
