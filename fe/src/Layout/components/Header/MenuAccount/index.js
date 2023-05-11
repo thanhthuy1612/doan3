@@ -22,6 +22,7 @@ export default function MenuAccount({ walletAddress }) {
         {
             icon: <FontAwesomeIcon icon={faEye} />,
             title: 'Watch List',
+            to: `/transfer/${walletAddress?._id}`,
         },
         {
             icon: <FontAwesomeIcon icon={faTable} />,

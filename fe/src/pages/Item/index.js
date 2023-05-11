@@ -15,7 +15,7 @@ export default function Item() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const handleBack = () => {
-        navigate('/');
+        navigate(-1);
     };
     useEffect(() => {
         const fetch = async () => {
@@ -38,7 +38,7 @@ export default function Item() {
         <div className={styles.wrapper}>
             <div className={styles.back}>
                 <FontAwesomeIcon onClick={handleBack} className={styles.icon} icon={faArrowAltCircleLeft} />
-                <p className={styles.text}>Go Back Home</p>
+                <p className={styles.text}>Go Back</p>
             </div>
             <div className={styles.body}>
                 <img className={styles.imgMeta} src={item?.meta?.img} alt="img" />
@@ -55,7 +55,7 @@ export default function Item() {
                     <div className={styles.time}>
                         <div className={styles.clock}>
                             <FontAwesomeIcon className={styles.clockItem} icon={faClock} />
-                            <p className={styles.textTime}>{item?.meta.time}</p>
+                            <p className={styles.textTime}>{item?.time}</p>
                         </div>
                         <div className={styles.price}>
                             <p className={styles.priceTitle}>Price: </p>

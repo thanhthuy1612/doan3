@@ -1,21 +1,21 @@
 import axios from 'axios';
 import { baseURL } from '~/api/url';
 
+// const requestAccessToken = axios.create({ baseURL: baseURL });
 const request = axios.create({ baseURL: baseURL });
-const requestIPFS = axios.create({ baseURL: baseURL });
 
-request.interceptors.request.use(
-    function (config) {
-        const accessToken = localStorage.getItem('token');
-        if (accessToken) {
-            config.headers['x-access-token'] = accessToken;
-        }
-        return config;
-    },
-    function (error) {
-        return Promise.reject(error);
-    },
-);
+// requestAccessToken.interceptors.request.use(
+//     function (config) {
+//         const accessToken = localStorage.getItem('token');
+//         if (accessToken) {
+//             config.headers['x-access-token'] = accessToken;
+//         }
+//         return config;
+//     },
+//     function (error) {
+//         return Promise.reject(error);
+//     },
+// );
 
 export const get = async (path, options = {}) => {
     const response = await request.get(path, options);
@@ -23,7 +23,7 @@ export const get = async (path, options = {}) => {
 };
 
 export const getIPFS = async (path, options = {}) => {
-    const response = await requestIPFS.get(path, options);
+    const response = await request.get(path, options);
     return response.data;
 };
 
@@ -37,9 +37,14 @@ export const post = async (path, options = {}) => {
     return response;
 };
 
+export const postLogin = async (path, options = {}) => {
+    const response = await request.post(path, options);
+    return response;
+};
+
 export const del = async (path, options = {}) => {
     const response = await request.delete(path, options);
     return response;
 };
 
-export { request, requestIPFS };
+export default request;

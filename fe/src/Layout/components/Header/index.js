@@ -10,7 +10,7 @@ import { Account } from '~/constants/Account';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import MenuAccount from './MenuAccount';
-import { fetchConnect, setLoading } from '~/redux';
+import { fetchConnect } from '~/redux';
 
 export default function Header() {
     const [state, _setState] = useState({});

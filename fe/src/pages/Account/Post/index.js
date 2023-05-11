@@ -42,6 +42,7 @@ export default function Post({ load }) {
                     ) : (
                         myNFT.map((item, index) => (
                             <ButtonCategory
+                                type="sell"
                                 key={index}
                                 item={item}
                                 onClick={() => {

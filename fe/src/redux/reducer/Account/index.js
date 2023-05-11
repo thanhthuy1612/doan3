@@ -32,13 +32,29 @@ const getERC = async () => {
     return { contract, erc721 };
 };
 
+const getDate = (time) => {
+    let yyyy = time.getFullYear();
+    let mm = time.getMonth() + 1; // Months start at 0!
+    let dd = time.getDate();
+    let hours = time.getHours();
+    let minutes = time.getMinutes();
+
+    if (dd < 10) dd = '0' + dd;
+    if (mm < 10) mm = '0' + mm;
+    if (hours < 10) hours = '0' + hours;
+    if (minutes < 10) minutes = '0' + minutes;
+
+    return dd + '-' + mm + '-' + yyyy + ' ' + hours + ':' + minutes;
+};
+
 const getItems = async (data, contract) => {
     const items = await Promise.all(
         data.map(async (i) => {
             let tokenUri = await contract.tokenURI(i.tokenId);
             const meta = await getItem(tokenUri);
-            let time = new Date(i.time.toNumber());
             let price = ethers.utils.formatUnits(i.price.toString(), 'ether');
+            let date = new Date(i.time.toNumber() * 1000);
+            let time = getDate(date);
             let item = {
                 tokenId: i.tokenId.toNumber(),
                 seller: i.seller,

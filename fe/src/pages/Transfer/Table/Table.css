@@ -1,0 +1,26 @@
+.success {
+    background-color: #f6ffed;
+    border: 1px solid #b7eb8f;
+}
+.error {
+    background-color: #fff2f0;
+    border: 1px solid #ffccc7;
+}
+.box {
+    display: flex;
+    justify-content: center;
+    padding: 3px 10px;
+    border-radius: 7px;
+}
+:where(.css-dev-only-do-not-override-ed5zg0).ant-pagination .ant-pagination-item-active a:hover {
+    color: #4d4d4d;
+}
+:where(.css-dev-only-do-not-override-ed5zg0).ant-pagination .ant-pagination-item-active a {
+    color: var(--text-color);
+}
+:where(.css-dev-only-do-not-override-ed5zg0).ant-pagination .ant-pagination-item-active {
+    border-color: var(--text-color);
+}
+:where(.css-dev-only-do-not-override-ed5zg0).ant-pagination .ant-pagination-item-active:hover {
+    border-color: #4d4d4d;
+}

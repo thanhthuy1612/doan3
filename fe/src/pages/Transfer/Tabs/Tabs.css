@@ -1,0 +1,20 @@
+.wrapper {
+}
+:where(.css-dev-only-do-not-override-ed5zg0).ant-tabs .ant-tabs-ink-bar {
+    background: var(--text-color);
+}
+:where(.css-dev-only-do-not-override-ed5zg0).ant-tabs .ant-tabs-tab:hover {
+    color: #4d4d4d;
+}
+:where(.css-dev-only-do-not-override-ed5zg0).ant-tabs .ant-tabs-tab:active {
+    color: #4d4d4d;
+}
+:where(.css-dev-only-do-not-override-ed5zg0).ant-tabs .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
+    color: var(--text-color);
+}
+:where(.css-dev-only-do-not-override-ed5zg0).ant-tabs {
+    color: #999999;
+}
+.title {
+    font-size: 20px;
+}

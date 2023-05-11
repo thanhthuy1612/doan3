@@ -33,14 +33,18 @@ const loginController = {
         const account = new Account({ wallet: verify });
         const saveAccount = await account.save();
         const tokens = generateTokens(saveAccount);
-        res.status(200).json({ data: saveAccount, tokens: tokens });
+        res
+          .status(200)
+          .json({ data: saveAccount, accessToken: tokens.accessToken });
       } catch (err) {
         res.status(500).json(err);
       }
     } else {
       try {
         const tokens = generateTokens(account[0]);
-        res.status(200).json({ data: account[0], tokens: tokens });
+        res
+          .status(200)
+          .json({ data: account[0], accessToken: tokens.accessToken });
       } catch (err) {
         res.status(500).json(err);
       }
@@ -65,7 +69,7 @@ const loginController = {
     try {
       jwt.verify(refreshToken, process.env.ACCESS_TOKEN_SECRET_REFRESH);
       const tokens = generateTokens(account[0]);
-      res.status(200).json(tokens);
+      res.status(200).json({ accessToken: tokens.accessToken });
     } catch (err) {
       res.status(500).json(err);
     }
