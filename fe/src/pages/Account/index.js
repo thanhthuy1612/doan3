@@ -4,13 +4,14 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { MyAccount } from '~/constants/MyAccount';
 import styles from './Account.module.scss';
 import { useDispatch, useSelector } from 'react-redux';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import Personal from './Personal';
 import { setAccount } from '~/redux';
 import { getAccount } from '~/api/account';
 import Tippy from '@tippyjs/react/headless';
 
 export default function Account() {
+    const [copy, setCopy] = useState(false);
     const defaultAccount = MyAccount;
     const params = useParams();
     let walletAddress = useSelector((state) => state.account.info);
@@ -29,6 +30,13 @@ export default function Account() {
     }, []);
     const handleShare = async () => {
         await navigator.clipboard.writeText('http://localhost:3000/account/seller/' + params.id);
+    };
+    const handleClick = async () => {
+        await navigator.clipboard.writeText(walletAddress.wallet);
+        setCopy(true);
+    };
+    const onMouseLeave = () => {
+        setCopy(false);
     };
     return (
         <div className={styles.wrapper}>
@@ -51,7 +59,10 @@ export default function Account() {
                     <h1 className={styles.username}>{walletAddress?.username || defaultAccount.username}</h1>
                     <div className={styles.wallet}>
                         <img className={styles.token} src={defaultAccount.token} alt="Token" />
-                        {walletAddress?.wallet || ''}
+                        <p className="button" onClick={handleClick} onMouseLeave={onMouseLeave}>
+                            {walletAddress?.wallet || ''}
+                        </p>
+                        <span className={styles.content}>{copy ? 'Copied!' : 'Copy'}</span>
                     </div>
                 </div>
                 <div className={styles.listIcon}>

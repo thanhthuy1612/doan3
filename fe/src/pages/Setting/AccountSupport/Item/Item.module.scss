@@ -1,0 +1,19 @@
+.wrapper {
+    width: 100%;
+    padding: 10px 30px;
+    + .wrapper {
+        border-top: 1px solid var(--default-gray);
+    }
+    .title {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        cursor: pointer;
+    }
+    .describe * {
+        display: none;
+    }
+    .disable {
+        display: block;
+    }
+}

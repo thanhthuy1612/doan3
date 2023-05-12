@@ -53,6 +53,9 @@ export default function Header() {
             setState({ copy: true });
         }
     };
+    const onMouseLeave = () => {
+        setState({ copy: false });
+    };
 
     return (
         <header className={styles.wrapper}>
@@ -90,7 +93,7 @@ export default function Header() {
                 </Tippy>
                 <div className={styles.listIcon}>
                     <div className={styles.wallet}>
-                        <div className={styles.walletButton} onClick={connectWallet}>
+                        <div className={styles.walletButton} onClick={connectWallet} onMouseLeave={onMouseLeave}>
                             <FontAwesomeIcon className={styles.iconWallet} icon={faWallet} />
                             {walletAddress?.wallet ? (
                                 <div className={styles.text}>
@@ -101,7 +104,7 @@ export default function Header() {
                                 <div className={styles.text}>Connect wallet</div>
                             )}
                             {walletAddress ? (
-                                <span className={styles.content}>{state.copy ? 'Copied' : 'Copy'}</span>
+                                <span className={styles.content}>{state.copy ? 'Copied!' : 'Copy'}</span>
                             ) : (
                                 <></>
                             )}

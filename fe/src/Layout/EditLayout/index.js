@@ -25,11 +25,6 @@ export default function EditLayout({ children }) {
                 to: `/account/notification/${walletAddress?._id}`,
             },
             {
-                icon: <FontAwesomeIcon icon={faTag} />,
-                title: 'Offers',
-                to: `/account/offers/${walletAddress?._id}`,
-            },
-            {
                 icon: <FontAwesomeIcon icon={faShield} />,
                 title: 'Account support',
                 to: `/account/support/${walletAddress?._id}`,
