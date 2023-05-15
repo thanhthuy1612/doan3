@@ -11,6 +11,7 @@ import Collection from '~/pages/Collection';
 import Earning from '~/pages/Setting/Earning';
 import AccountSupport from '~/pages/Setting/AccountSupport';
 import FeaturedItems from '~/pages/Setting/FeaturedItems';
+import Notification from '~/pages/Setting/Notification';
 
 const publicRoutes = [{ path: '/', component: Home }];
 
@@ -19,7 +20,7 @@ const privateRoutes = [
     { path: '/account/profile/:id', component: EditUser, layout: EditLayout },
     { path: '/account/earing/:id', component: Earning, layout: EditLayout },
     { path: '/account/support/:id', component: AccountSupport, layout: EditLayout },
-    { path: '/account/notification/:id', component: EditUser, layout: EditLayout },
+    { path: '/account/notification/:id', component: Notification, layout: EditLayout },
     { path: '/account/featured/:id', component: FeaturedItems, layout: EditLayout },
     { path: '/item/:tokenId', component: Item },
     { path: '/account/seller/:id', component: Seller },

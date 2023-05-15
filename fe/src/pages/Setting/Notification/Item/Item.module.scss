@@ -1,0 +1,32 @@
+.wrapper {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 10px 30px;
+    + .wrapper {
+        border-top: 1px solid var(--default-gray);
+    }
+    .title {
+        width: 100%;
+    }
+    .describe * {
+        display: none;
+    }
+    .disable {
+        display: block;
+    }
+}
+.icon {
+    margin-right: 20px;
+    cursor: pointer;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid var(--default-gray);
+    border-radius: 50%;
+    .iconButton {
+        font-size: 21px;
+    }
+}
