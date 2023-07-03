@@ -6,7 +6,7 @@ export default function HeaderMenu({ title, onBack }) {
     return (
         <header className={styles.header}>
             <button className={styles.backBtn} onClick={onBack}>
-                <FontAwesomeIcon icon={faChevronLeft} />
+                <FontAwesomeIcon className={styles.icon} icon={faChevronLeft} />
                 <h3 className={styles.title}>{title}</h3>
             </button>
         </header>

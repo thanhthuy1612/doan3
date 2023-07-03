@@ -67,7 +67,6 @@ export default function Header() {
                     </h2>
                 </div>
                 <Tippy
-                    interactive
                     render={(attrs) => (
                         <div className={styles.searchResult} tabIndex="-1" {...attrs}>
                             <PopperWrapper className="search">
@@ -86,7 +85,7 @@ export default function Header() {
                             ref={searchRef}
                             value={state.input}
                             onChange={handleChange || ''}
-                            placeholder="Search items, collections and accounts"
+                            placeholder="Search account"
                             spellCheck={false}
                         />
                     </div>

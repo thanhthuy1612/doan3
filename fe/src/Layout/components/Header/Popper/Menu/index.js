@@ -31,7 +31,7 @@ export default function Menu({ children, items = [], onChange = defaultFn }) {
     return (
         <Tippy
             interactive
-            delay={[0, 500]}
+            delay={[0, 50000000]}
             render={(attrs) => (
                 <div className={styles.content} tabIndex="-1" {...attrs}>
                     <PopperWrapper className="menu">
